@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>9.8 - Press Kit</title>
+  <meta name="description" content="Press kit for 9.8, a physics-based space agency simulation with N-body orbital mechanics, 3D WebGL planet renders, and 50+ unique celestial bodies.">
+  <style>
+    /*
+     * Styling derived from the game's actual UI:
+     *  - Panel bg/border from toast, minimap, shop, mission windows
+     *  - Colors from ui-hud.js, assembly_menu.html, buildings.html
+     *  - Fonts from uiFont() and CSS in index.html
+     *  - Glow effects from income tracker, tutorial screen
+     */
+
+    :root {
+      /* Game panel colors (toast/minimap/shop) */
+      --panel-bg: rgba(10, 20, 30, 0.92);
+      --panel-border: rgba(120, 220, 255, 0.8);
+      --panel-border-dim: rgba(120, 220, 255, 0.16);
+      --panel-hover: rgba(30, 60, 80, 0.95);
+
+      /* Deep space backgrounds */
+      --bg-deep: #05070f;
+      --bg-space: #0a0a12;
+      --bg-panel: rgba(12, 16, 28, 0.94);
+
+      /* Text hierarchy (from HUD/menus) */
+      --text-primary: #c7f7ff;
+      --text-hud: #9be7ff;
+      --text-muted: rgba(200, 220, 240, 0.72);
+      --text-dim: #6a8a9a;
+
+      /* Accent colors (from game systems) */
+      --cyan: #0ff;
+      --cyan-soft: #7cd7ff;
+      --cyan-title: #6fe3ff;
+      --cyan-bright: #66ccff;
+      --green: #66ff66;
+      --green-soft: #8fffd0;
+      --orange: #ff6b00;
+      --orange-soft: #ffb870;
+      --gold: #ffd700;
+
+      /* Button colors (from tutorial-start) */
+      --btn-bg: #0b5d7a;
+      --btn-border: #39c4ff;
+      --btn-hover: #0f6e91;
+
+      /* Borders */
+      --border-panel: #1b4254;
+      --border-input: #15506a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg-space);
+      color: var(--text-hud);
+      line-height: 1.4;
+    }
+
+    /* ===== Language selector ===== */
+    .lang-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: var(--panel-bg);
+      border-bottom: 1px solid var(--panel-border-dim);
+      padding: 8px 24px;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      z-index: 100;
+      font-size: 13px;
+    }
+    .lang-bar span {
+      color: var(--text-dim);
+      margin-right: 8px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .lang-btn {
+      background: rgba(10, 20, 30, 0.90);
+      border: 1px solid rgba(120, 220, 255, 0.5);
+      color: rgba(140, 220, 255, 0.7);
+      padding: 3px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+    }
+    .lang-btn:hover {
+      background: rgba(18, 35, 50, 0.92);
+      border-color: rgba(160, 235, 255, 0.95);
+      color: rgba(200, 250, 255, 0.95);
+    }
+    .lang-btn.active {
+      background: rgba(20, 48, 42, 0.92);
+      border-color: rgba(140, 255, 200, 0.95);
+      color: rgba(220, 255, 240, 0.98);
+    }
+
+    /* ===== Header ===== */
+    .header {
+      margin-top: 40px;
+      padding: 80px 24px 60px;
+      text-align: center;
+      background: radial-gradient(circle at 40% 20%, #1a2337, var(--bg-deep) 65%);
+      border-bottom: 1px solid var(--border-panel);
+    }
+    .header h1 {
+      font-size: 4.5em;
+      font-weight: 700;
+      color: var(--cyan);
+      text-shadow: 0 0 30px rgba(0, 255, 255, 0.5), 0 0 60px rgba(0, 255, 255, 0.2);
+      letter-spacing: 6px;
+      font-family: 'Consolas', 'Monaco', monospace;
+    }
+    .header .subtitle {
+      font-size: 0.85em;
+      color: var(--text-dim);
+      margin-top: 6px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+    .header .tagline {
+      font-size: 1.1em;
+      color: var(--text-muted);
+      margin-top: 16px;
+    }
+
+    /* ===== Layout ===== */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      padding: 48px 0;
+      border-bottom: 1px solid rgba(120, 220, 255, 0.08);
+    }
+    section:last-child { border-bottom: none; }
+
+    h2 {
+      font-size: 1.3em;
+      color: var(--orange);
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 600;
+      text-shadow: 0 0 15px rgba(255, 107, 0, 0.4);
+      border-bottom: 1px solid rgba(255, 107, 0, 0.3);
+      padding-bottom: 8px;
+    }
+
+    h3 {
+      color: var(--text-primary);
+      font-size: 1em;
+      margin: 16px 0 8px;
+    }
+
+    p { margin-bottom: 12px; }
+
+    strong { color: var(--cyan-soft); }
+
+    code {
+      background: #123;
+      border: 1px solid #235;
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-size: 0.85em;
+      font-family: 'Consolas', 'Monaco', monospace;
+      color: var(--cyan-soft);
+    }
+
+    a { color: var(--cyan-bright); }
+    a:hover { color: var(--cyan); }
+
+    /* ===== Factsheet ===== */
+    .factsheet {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    .fact-table { width: 100%; border-collapse: collapse; }
+    .fact-table tr { border-bottom: 1px solid rgba(120, 220, 255, 0.08); }
+    .fact-table td {
+      padding: 10px 0;
+      vertical-align: top;
+    }
+    .fact-table td:first-child {
+      color: var(--text-dim);
+      width: 140px;
+      font-size: 0.85em;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ===== Feature cards ===== */
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .feature {
+      background: rgba(15, 15, 25, 0.9);
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .feature:hover {
+      border-color: rgba(120, 220, 255, 0.5);
+      box-shadow: 0 0 12px -4px rgba(0, 255, 255, 0.2);
+    }
+    .feature h3 {
+      color: var(--cyan-soft);
+      margin: 0 0 8px;
+      font-size: 0.95em;
+      font-weight: 600;
+    }
+    .feature p {
+      font-size: 0.85em;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* ===== Celestial bodies ===== */
+    .bodies-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .body-card {
+      background: rgba(15, 15, 25, 0.9);
+      border: 1px solid rgba(0, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 14px;
+      transition: border-color 0.2s;
+    }
+    .body-card:hover {
+      border-color: rgba(120, 220, 255, 0.5);
+    }
+    .body-card .name {
+      color: var(--cyan-soft);
+      font-weight: 600;
+      font-size: 0.95em;
+    }
+    .body-card .type {
+      color: var(--text-dim);
+      font-size: 0.75em;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .body-card .desc {
+      color: var(--text-muted);
+      font-size: 0.82em;
+      margin-top: 4px;
+    }
+    .body-card.star { border-color: rgba(255, 215, 0, 0.3); }
+    .body-card.star .name { color: var(--gold); }
+    .body-card.planet { border-color: rgba(0, 255, 136, 0.2); }
+    .body-card.planet .name { color: #00ff88; }
+
+    /* ===== Screenshots ===== */
+    .screenshots-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .screenshot-placeholder {
+      background: radial-gradient(ellipse at center, rgba(20, 20, 35, 0.8) 0%, rgba(10, 10, 18, 0.9) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dim);
+      font-size: 0.82em;
+      font-family: 'Consolas', 'Monaco', monospace;
+    }
+    .screenshots-grid img {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid rgba(120, 220, 255, 0.15);
+      transition: border-color 0.2s;
+      cursor: pointer;
+    }
+    .screenshots-grid img:hover {
+      border-color: var(--cyan);
+    }
+
+    /* ===== Download buttons ===== */
+    .downloads {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .dl-btn {
+      display: inline-block;
+      background: var(--btn-bg);
+      border: 1px solid var(--btn-border);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 0.9em;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .dl-btn:hover {
+      background: var(--btn-hover);
+      box-shadow: 0 0 12px rgba(57, 196, 255, 0.25);
+      color: #fff;
+    }
+
+    /* ===== Credits ===== */
+    .credits-list {
+      list-style: none;
+    }
+    .credits-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(120, 220, 255, 0.08);
+    }
+    .credits-list .role {
+      color: var(--text-dim);
+      font-size: 0.85em;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 700px) {
+      .factsheet { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .bodies-list { grid-template-columns: 1fr 1fr; }
+      .screenshots-grid { grid-template-columns: 1fr; }
+      .header h1 { font-size: 3em; letter-spacing: 3px; }
+    }
+
+    /* ===== Localization ===== */
+    [data-lang] { display: none; }
+    [data-lang="en"] { display: revert; }
+  </style>
+</head>
+<body>
+
+<!-- Language bar -->
+<div class="lang-bar">
+  <span data-lang="en">Language:</span>
+  <span data-lang="pt">Idioma:</span>
+  <span data-lang="es">Idioma:</span>
+  <span data-lang="fr">Langue :</span>
+  <span data-lang="de">Sprache:</span>
+  <span data-lang="zh">语言：</span>
+  <span data-lang="ru">Язык:</span>
+  <button class="lang-btn active" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" onclick="setLang('pt')">PT</button>
+  <button class="lang-btn" onclick="setLang('es')">ES</button>
+  <button class="lang-btn" onclick="setLang('fr')">FR</button>
+  <button class="lang-btn" onclick="setLang('de')">DE</button>
+  <button class="lang-btn" onclick="setLang('zh')">中文</button>
+  <button class="lang-btn" onclick="setLang('ru')">RU</button>
+</div>
+
+<!-- Header -->
+<div class="header">
+  <img src="images/logo.png" alt="9.8 logo" style="width: 120px; height: 120px; margin-bottom: 16px; border-radius: 12px;">
+  <h1>9.8</h1>
+  <p class="subtitle" data-lang="en">Press Kit</p>
+  <p class="subtitle" data-lang="pt">Kit de Imprensa</p>
+  <p class="subtitle" data-lang="es">Kit de prensa</p>
+  <p class="subtitle" data-lang="fr">Dossier de presse</p>
+  <p class="subtitle" data-lang="de">Pressekit</p>
+  <p class="subtitle" data-lang="zh">媒体资料包</p>
+  <p class="subtitle" data-lang="ru">Пресс-кит</p>
+  <p class="tagline" data-lang="en">Launch rockets, orbit planets, build colonies. All governed by real physics.</p>
+  <p class="tagline" data-lang="pt">Lance foguetões, entre em órbita, estabeleça colónias. Tudo assente em física realista.</p>
+  <p class="tagline" data-lang="es">Lanza cohetes, entra en órbita y establece colonias. Todo sustentado por una física realista.</p>
+  <p class="tagline" data-lang="fr">Lancez des fusées, mettez-vous en orbite et établissez des colonies. Le tout porté par une physique réaliste.</p>
+  <p class="tagline" data-lang="de">Starte Raketen, erreiche den Orbit und errichte Kolonien. Alles basiert auf realistischer Physik.</p>
+  <p class="tagline" data-lang="zh">发射火箭、进入轨道、建立殖民地。一切建立在严谨的物理模拟之上。</p>
+  <p class="tagline" data-lang="ru">Запускай ракеты, выходи на орбиту и создавай колонии. Всё основано на реалистичной физике.</p>
+</div>
+
+<div class="container">
+
+  <!-- ==================== ENGLISH ==================== -->
+  <div data-lang="en">
+
+    <section>
+      <div class="factsheet">
+        <div>
+          <h2>Factsheet</h2>
+          <table class="fact-table">
+            <tr><td>Developer</td><td><strong>André B. Silva / Tremoço Games</strong></td></tr>
+            <tr><td>Release</td><td>Early Access 2026</td></tr>
+            <tr><td>Platforms</td><td>Windows, Mac, Linux</td></tr>
+            <tr><td>Genre</td><td>Physics-based Space Agency Simulation</td></tr>
+            <tr><td>Price</td><td>TBA</td></tr>
+            <tr><td>Languages</td><td>EN, PT, ES, FR, DE, ZH, RU</td></tr>
+            <tr><td>Press Contact</td><td>tremocogames@gmail.com</td></tr>
+          </table>
+        </div>
+        <div>
+          <h2>Description</h2>
+          <p><strong>9.8</strong> is a physics-driven space agency simulation. Research technologies, develop rocket parts, and build vehicles in a freeform editor. Launch through realistic atmospheric and orbital physics, land on alien worlds, establish colonies, and manage supply chains across a hand-crafted star system.</p>
+          <p>Every planet and moon features unique 3D WebGL-rendered surfaces while the flight model runs on full N-body orbital mechanics with atmospheric drag, re-entry heating, and liquid physics. Drive rovers, pilot boats and aircraft on planetary surfaces, and eventually take your agency interstellar. Launching in Early Access with an original soundtrack and an active development roadmap toward 1.0.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Features</h2>
+      <div class="features-grid">
+        <div class="feature"><h3>Rocket R&amp;D Pipeline</h3><p>Research technologies, develop parts in R&amp;D, then assemble vehicles in a freeform editor. Heat shields, parachutes, RCS, landing legs, staging, docking, and more.</p></div>
+        <div class="feature"><h3>N-Body Orbital Mechanics</h3><p>Full gravitational simulation with atmospheric drag, re-entry heating, advanced aerodynamics, and liquid physics. No rails, no cheats, real orbits.</p></div>
+        <div class="feature"><h3>3D WebGL Celestial Bodies</h3><p>50+ planets and moons, each with a unique WebGL-rendered surface: volcanic lava flows, frozen geysers, alien terrain, ring systems, and day-night cycles.</p></div>
+        <div class="feature"><h3>Surface &amp; Orbital Operations</h3><p>Drive rovers, pilot boats and aircraft on planetary surfaces. Build mines, power plants, habitation modules, and science hubs. Construct space stations and orbital infrastructure in orbit.</p></div>
+        <div class="feature"><h3>Interstellar Expansion</h3><p>Start in the Solara system and expand into a cluster of star systems, each with their own planets, moons, and challenges to discover.</p></div>
+        <div class="feature"><h3>Supply Chain Logistics</h3><p>Mine raw materials, refine resources, and transport cargo between planets. Build the infrastructure that keeps your agency running.</p></div>
+        <div class="feature"><h3>Multiplayer</h3><p>Cooperative and competitive modes. Share a space program with friends or run rival agencies competing for contracts and territory.</p></div>
+        <div class="feature"><h3>Science &amp; Progression</h3><p>A research-driven progression system where scientific discovery unlocks new technologies, destinations, and capabilities. Every mission advances your agency toward the stars.</p></div>
+        <div class="feature"><h3>Original Soundtrack</h3><p>A dedicated score composed for the game, setting the mood from the tension of launch to the solitude of deep space.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Meet Some of the Celestial Bodies</h2>
+      <p style="color: var(--text-muted); margin-bottom: 16px;">The Solara system contains 50+ hand-crafted worlds to explore. Here are a few.</p>
+      <div class="bodies-list">
+        <div class="body-card star"><span class="name">Solara</span><span class="type"> ·Star</span><div class="desc">The central star of the system.</div></div>
+        <div class="body-card planet"><span class="name">Qel'Nara</span><span class="type"> ·Planet</span><div class="desc">Home world. Earth-like with clouds, seas, and atmosphere.</div></div>
+        <div class="body-card planet"><span class="name">Tinderhusk</span><span class="type"> ·Planet</span><div class="desc">Volcanic world with molten lava surface.</div></div>
+        <div class="body-card planet"><span class="name">Heliophon</span><span class="type"> ·Gas Giant</span><div class="desc">Ringed gas giant with crushing atmosphere.</div></div>
+        <div class="body-card planet"><span class="name">Glacielle</span><span class="type"> ·Planet</span><div class="desc">Ice world at the frontier, with geysers and frozen terrain.</div></div>
+        <div class="body-card"><span class="name">Kite</span><span class="type"> ·Moon of Qel'Nara</span><div class="desc">Your nearest neighbor and first stepping stone into space.</div></div>
+        <div class="body-card"><span class="name">Scorch</span><span class="type"> ·Moon of Heliophon</span><div class="desc">A scorched world baked by its gas giant's radiation.</div></div>
+        <div class="body-card"><span class="name">Iolanthe</span><span class="type"> ·Moon of Heliophon</span><div class="desc">Non-spherical moon with surface-normal gravity.</div></div>
+      </div>
+      <p style="color: var(--text-dim); margin-top: 16px; font-size: 0.85em;">...and dozens more to discover.</p>
+    </section>
+
+    <section>
+      <h2>Screenshots</h2>
+      <p style="color: var(--text-dim); margin-bottom: 16px;">Add screenshots to <code>presskit/images/</code> and update the paths below.</p>
+      <div class="screenshots-grid">
+        <img src="images/screenshot-01.png" alt="Rocket launch from Alpha Prime" onclick="window.open(this.src)">
+        <img src="images/screenshot-02.png" alt="Tinderhusk - volcanic world with lava rivers" onclick="window.open(this.src)">
+        <img src="images/screenshot-03.png" alt="Moon base with rocket on launchpad" onclick="window.open(this.src)">
+        <img src="images/screenshot-04.png" alt="Orbital flight with HUD and atmosphere" onclick="window.open(this.src)">
+        <img src="images/screenshot-05.png" alt="Glacielle - frozen moon with ice crystal surface" onclick="window.open(this.src)">
+        <img src="images/screenshot-06.png" alt="Qel'Nara - habitable world with oceans and clouds" onclick="window.open(this.src)">
+      </div>
+    </section>
+
+    <section>
+      <h2>Videos</h2>
+      <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; border: 1px solid var(--panel-border);">
+        <iframe src="https://www.youtube.com/embed/ghxzYa5Bdew" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </section>
+
+    <section>
+      <h2>Logo &amp; Key Art</h2>
+      <div style="display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 16px; align-items: flex-start;">
+        <img src="images/logo.png" alt="9.8 logo" style="width: 128px; border-radius: 8px; border: 1px solid var(--panel-border);">
+        <img src="images/keyart.png" alt="9.8 key art" style="max-width: 460px; width: 100%; border-radius: 8px; border: 1px solid var(--panel-border);">
+      </div>
+      <div class="downloads">
+        <a class="dl-btn" href="images/logo.png">Logo (PNG)</a>
+        <a class="dl-btn" href="images/keyart.png">Key Art (PNG)</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Download</h2>
+      <div class="downloads">
+        <a class="dl-btn" href="images/9.8-presskit.zip">Download All Assets (.zip)</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>About the Developer</h2>
+      <p>Tremoço Games is a solo dev studio by Porto-based musician and composer André B. Silva, working on their first game, 9.8. The project combines a lifelong passion for space exploration and physics with a background in music composition.</p>
+    </section>
+
+    <section>
+      <h2>Credits</h2>
+      <ul class="credits-list">
+        <li><strong>André B. Silva / Tremoço Games</strong> <span class="role">Design, Programming, Art</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Contact</h2>
+      <table class="fact-table">
+        <tr><td>Press Email</td><td>tremocogames@gmail.com</td></tr>
+        <tr><td>Steam</td><td><a href="https://store.steampowered.com/app/4247050/98/" target="_blank">store.steampowered.com/app/4247050/98/</a></td></tr>
+        <tr><td>Twitter / X</td><td><a href="https://x.com/9point8Game" target="_blank">@9point8Game</a></td></tr>
+        <tr><td>Discord</td><td><a href="https://discord.com/invite/Hj2UgH7zwf" target="_blank">discord.com/invite/Hj2UgH7zwf</a></td></tr>
+        <tr><td>YouTube</td><td><a href="https://www.youtube.com/channel/UCIASc31MGWTo4lO0Zg-qr5A" target="_blank">YouTube Channel</a></td></tr>
+      </table>
+    </section>
+
+  </div><!-- /en -->
+
+  <!-- ==================== PORTUGUESE ==================== -->
+  <div data-lang="pt">
+    <section>
+      <div class="factsheet">
+        <div>
+          <h2>Ficha Técnica</h2>
+          <table class="fact-table">
+            <tr><td>Desenvolvido por</td><td><strong>André B. Silva / Tremoço Games</strong></td></tr>
+            <tr><td>Lançamento</td><td>Acesso Antecipado 2026</td></tr>
+            <tr><td>Plataformas</td><td>Windows, Mac, Linux</td></tr>
+            <tr><td>Género</td><td>Simulador de agência espacial baseado em física</td></tr>
+            <tr><td>Preço</td><td>Por anunciar</td></tr>
+            <tr><td>Idiomas</td><td>EN, PT, ES, FR, DE, ZH, RU</td></tr>
+            <tr><td>Contacto de imprensa</td><td>tremocogames@gmail.com</td></tr>
+          </table>
+        </div>
+        <div>
+          <h2>Descrição</h2>
+          <p><strong>9.8</strong> é um simulador de agência espacial assente em princípios físicos realistas. Ao longo da campanha, investigas novas tecnologias, desenvolves peças e sistemas e montas veículos num editor livre. Dominas lançamentos, manobras orbitais e aterragens em mundos alienígenas, estabeleces colónias e manténs uma rede de abastecimento num sistema estelar desenhado à mão.</p>
+          <p>Cada planeta e cada lua apresentam uma identidade própria, com superfícies 3D em WebGL e condições de voo distintas. A simulação contempla órbitas reais, resistência do ar, calor gerado na reentrada e o comportamento de líquidos e combustíveis. Para além das operações espaciais, também conduzes rovers, barcos e aeronaves, levando a tua agência, passo a passo, até à expansão interestelar. O lançamento em Acesso Antecipado está previsto para 2026, acompanhado por uma banda sonora original e por um plano de desenvolvimento em curso até à versão 1.0.</p>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2>Características</h2>
+      <div class="features-grid">
+        <div class="feature"><h3>Investigação, Desenvolvimento e Construção</h3><p>Da investigação científica à plataforma de lançamento, acompanhas todo o processo de desenvolvimento dos teus veículos. Escudos térmicos, paraquedas, RCS, pernas de aterragem, separação por estágios, acoplagem e muito mais.</p></div>
+        <div class="feature"><h3>Órbitas Reais e Gravidade entre Vários Corpos</h3><p>Cada voo obedece à interação gravítica entre vários corpos, à resistência do ar, ao calor da reentrada, à aerodinâmica e à forma como líquidos e combustíveis se comportam em voo. Sem carris nem simplificações artificiais.</p></div>
+        <div class="feature"><h3>Mundos 3D em WebGL</h3><p>Exploras mais de 50 planetas e luas com identidade visual própria, de rios de lava e géiseres gelados a paisagens alienígenas, anéis planetários e ciclos de dia e noite.</p></div>
+        <div class="feature"><h3>Operações à Superfície e em Órbita</h3><p>Exploras o terreno com rovers, barcos e aeronaves, enquanto constróis minas, centrais energéticas, módulos habitacionais, estações espaciais e outra infraestrutura para sustentar a expansão da agência.</p></div>
+        <div class="feature"><h3>Expansão Interestelar</h3><p>Começas no sistema Solara e alargas a operação a vários sistemas estelares, cada um com mundos, luas e desafios próprios.</p></div>
+        <div class="feature"><h3>Extração, Refinação e Logística</h3><p>Recolhes matérias-primas, transformas recursos e geres o transporte de carga entre planetas como parte central da gestão da agência.</p></div>
+        <div class="feature"><h3>Multijogador</h3><p>No cooperativo e no competitivo, podes partilhar um programa espacial ou disputar contratos e território entre agências rivais.</p></div>
+        <div class="feature"><h3>Ciência e Progressão</h3><p>À medida que investigas, desbloqueias novas tecnologias, novos destinos e novas capacidades. Cada missão contribui para a evolução da agência.</p></div>
+        <div class="feature"><h3>Banda Sonora Original</h3><p>Uma banda sonora composta de raiz acompanha-te da tensão do lançamento à solidão do espaço profundo.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Alguns dos Mundos do Sistema Solara</h2>
+      <p style="color: var(--text-muted); margin-bottom: 16px;">O sistema Solara reúne mais de 50 mundos construídos à mão. Estes são apenas alguns dos que vais encontrar.</p>
+      <div class="bodies-list">
+        <div class="body-card star"><span class="name">Solara</span><span class="type"> ·Estrela</span><div class="desc">A estrela central do sistema.</div></div>
+        <div class="body-card planet"><span class="name">Qel'Nara</span><span class="type"> ·Planeta</span><div class="desc">Planeta natal, de tipo terrestre, com nuvens, mares e atmosfera.</div></div>
+        <div class="body-card planet"><span class="name">Tinderhusk</span><span class="type"> ·Planeta</span><div class="desc">Planeta vulcânico coberto por lava incandescente.</div></div>
+        <div class="body-card planet"><span class="name">Heliophon</span><span class="type"> ·Gigante Gasoso</span><div class="desc">Gigante gasoso com anéis e uma atmosfera extrema.</div></div>
+        <div class="body-card planet"><span class="name">Glacielle</span><span class="type"> ·Planeta</span><div class="desc">Mundo gelado na fronteira do sistema, com géiseres e terreno congelado.</div></div>
+        <div class="body-card"><span class="name">Kite</span><span class="type"> ·Lua de Qel'Nara</span><div class="desc">Lua mais próxima de Qel'Nara e primeiro passo natural rumo ao espaço.</div></div>
+        <div class="body-card"><span class="name">Scorch</span><span class="type"> ·Lua de Heliophon</span><div class="desc">Mundo marcado pela radiação do seu gigante gasoso.</div></div>
+        <div class="body-card"><span class="name">Iolanthe</span><span class="type"> ·Lua de Heliophon</span><div class="desc">Lua irregular com gravidade orientada pela forma da superfície.</div></div>
+      </div>
+      <p style="color: var(--text-dim); margin-top: 16px; font-size: 0.85em;">...e dezenas de outros por descobrir.</p>
+    </section>
+
+    <section>
+      <h2>Capturas de Ecrã</h2>
+      <p style="color: var(--text-dim); margin-bottom: 16px;">Adiciona capturas de ecrã a <code>presskit/images/</code> e atualiza os caminhos abaixo.</p>
+      <div class="screenshots-grid">
+        <img src="images/screenshot-01.png" alt="Rocket launch from Alpha Prime" onclick="window.open(this.src)">
+        <img src="images/screenshot-02.png" alt="Tinderhusk - volcanic world with lava rivers" onclick="window.open(this.src)">
+        <img src="images/screenshot-03.png" alt="Moon base with rocket on launchpad" onclick="window.open(this.src)">
+        <img src="images/screenshot-04.png" alt="Orbital flight with HUD and atmosphere" onclick="window.open(this.src)">
+        <img src="images/screenshot-05.png" alt="Glacielle - frozen moon with ice crystal surface" onclick="window.open(this.src)">
+        <img src="images/screenshot-06.png" alt="Qel'Nara - habitable world with oceans and clouds" onclick="window.open(this.src)">
+      </div>
+    </section>
+
+    <section>
+      <h2>Vídeos</h2>
+      <p style="color: var(--text-dim);"><!-- TODO -->[Insere o trailer ou a ligação aqui]</p>
+    </section>
+
+    <section>
+      <h2>Logótipo e Arte Principal</h2>
+      <div style="display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 16px; align-items: flex-start;">
+        <img src="images/logo.png" alt="9.8 logo" style="width: 128px; border-radius: 8px; border: 1px solid var(--panel-border);">
+        <img src="images/keyart.png" alt="9.8 key art" style="max-width: 460px; width: 100%; border-radius: 8px; border: 1px solid var(--panel-border);">
+      </div>
+      <div class="downloads">
+        <a class="dl-btn" href="images/logo.png">Logótipo (PNG)</a>
+        <a class="dl-btn" href="images/keyart.png">Arte principal (PNG)</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Descarregar</h2>
+      <div class="downloads">
+        <a class="dl-btn" href="images/9.8-presskit.zip">Descarregar todos os materiais (.zip)</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Sobre o Estúdio</h2>
+      <p>A Tremoço Games é um estúdio independente de uma só pessoa, criado pelo músico e compositor portuense André B. Silva. 9.8 é o seu primeiro jogo, nascido de uma paixão de longa data pela exploração espacial e pela física, aliada a anos de experiência em composição musical.</p>
+    </section>
+
+    <section>
+      <h2>Créditos</h2>
+      <ul class="credits-list">
+        <li><strong>André B. Silva / Tremoço Games</strong> <span class="role">Criação, programação e arte</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Contacto</h2>
+      <table class="fact-table">
+        <tr><td>Email de imprensa</td><td>tremocogames@gmail.com</td></tr>
+        <tr><td>Steam</td><td><a href="https://store.steampowered.com/app/4247050/98/" target="_blank">store.steampowered.com/app/4247050/98/</a></td></tr>
+        <tr><td>Twitter / X</td><td><a href="https://x.com/9point8Game" target="_blank">@9point8Game</a></td></tr>
+        <tr><td>Discord</td><td><a href="https://discord.com/invite/Hj2UgH7zwf" target="_blank">discord.com/invite/Hj2UgH7zwf</a></td></tr>
+        <tr><td>YouTube</td><td><a href="https://www.youtube.com/channel/UCIASc31MGWTo4lO0Zg-qr5A" target="_blank">YouTube Channel</a></td></tr>
+      </table>
+    </section>
+  </div><!-- /pt -->
+
+  <!-- ==================== SPANISH ==================== -->
+  <div data-lang="es">
+    <section>
+      <div class="factsheet">
+        <div>
+          <h2>Ficha técnica</h2>
+          <table class="fact-table">
+            <tr><td>Desarrollador</td><td><strong>André B. Silva / Tremoço Games</strong></td></tr>
+            <tr><td>Lanzamiento</td><td>Acceso Anticipado 2026</td></tr>
+            <tr><td>Plataformas</td><td>Windows, Mac, Linux</td></tr>
+            <tr><td>Género</td><td>Simulador de agencia espacial basado en la física</td></tr>
+            <tr><td>Precio</td><td>Por definir</td></tr>
+            <tr><td>Idiomas</td><td>EN, PT, ES, FR, DE, ZH, RU</td></tr>
+            <tr><td>Contacto de Prensa</td><td>tremocogames@gmail.com</td></tr>
+          </table>
+        </div>
+        <div>
+          <h2>Descripción</h2>
+          <p><strong>9.8</strong> es un simulador de agencia espacial basado en principios físicos realistas. A lo largo de la campaña, el jugador investiga nuevas tecnologías, desarrolla piezas y sistemas y ensambla vehículos en un editor abierto. El objetivo es dominar lanzamientos, maniobras orbitales y aterrizajes en mundos alienígenas, establecer colonias y sostener una red logística dentro de un sistema estelar creado a mano.</p>
+          <p>Cada planeta y cada luna presentan una identidad propia, con superficies 3D en WebGL y condiciones de vuelo diferenciadas. La simulación contempla órbitas reales, resistencia atmosférica, calor durante la reentrada y el comportamiento de líquidos y combustibles. Además de la navegación espacial, 9.8 incluye rovers, embarcaciones y aeronaves, y extiende la progresión de la agencia hasta la expansión interestelar. Su lanzamiento en Acceso Anticipado está previsto para 2026, acompañado por una banda sonora original y por un plan de desarrollo en marcha hasta la versión 1.0.</p>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2>Características</h2>
+      <div class="features-grid">
+        <div class="feature"><h3>Investigación, desarrollo y ensamblaje</h3><p>Desde la investigación científica hasta la plataforma de lanzamiento, el juego abarca todo el proceso de creación de vehículos. Escudos térmicos, paracaídas, RCS, patas de aterrizaje, separación por etapas, acoplamiento y mucho más.</p></div>
+        <div class="feature"><h3>Órbitas reales y gravedad entre varios cuerpos</h3><p>La simulación tiene en cuenta la interacción gravitatoria entre varios cuerpos, la resistencia del aire, el calor de la reentrada, la aerodinámica y el comportamiento de líquidos y combustibles. Sin trayectorias prefijadas ni atajos artificiales.</p></div>
+        <div class="feature"><h3>Mundos 3D en WebGL</h3><p>Más de 50 planetas y lunas con identidad visual propia, desde ríos de lava y géiseres helados hasta paisajes alienígenas, anillos planetarios y ciclos de día y noche.</p></div>
+        <div class="feature"><h3>Operaciones en superficie y en órbita</h3><p>Rovers, embarcaciones y aeronaves amplían la exploración planetaria, mientras minas, centrales eléctricas, módulos habitacionales, estaciones espaciales e infraestructura orbital sostienen la expansión de la agencia.</p></div>
+        <div class="feature"><h3>Expansión interestelar</h3><p>La progresión comienza en el sistema Solara y se extiende a varios sistemas estelares, cada uno con mundos, lunas y retos propios.</p></div>
+        <div class="feature"><h3>Extracción, refinado y logística</h3><p>La obtención de materias primas, el procesamiento de recursos y el transporte de carga entre planetas forman parte esencial de la gestión de la agencia.</p></div>
+        <div class="feature"><h3>Multijugador</h3><p>Los modos cooperativo y competitivo permiten compartir un programa espacial o disputar contratos y territorio entre agencias rivales.</p></div>
+        <div class="feature"><h3>Ciencia y progresión</h3><p>La investigación científica desbloquea nuevas tecnologías, destinos y capacidades. Cada misión contribuye al crecimiento de la agencia.</p></div>
+        <div class="feature"><h3>Banda sonora original</h3><p>Una banda sonora compuesta específicamente para el juego, desde la tensión del lanzamiento hasta la soledad del espacio profundo.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Algunos mundos del sistema Solara</h2>
+      <p style="color: var(--text-muted); margin-bottom: 16px;">El sistema Solara reúne más de 50 mundos creados a mano. Estos son solo algunos.</p>
+      <div class="bodies-list">
+        <div class="body-card star"><span class="name">Solara</span><span class="type"> ·Estrella</span><div class="desc">La estrella central del sistema.</div></div>
+        <div class="body-card planet"><span class="name">Qel'Nara</span><span class="type"> ·Planeta</span><div class="desc">Planeta de origen, de tipo terrestre, con nubes, mares y atmósfera.</div></div>
+        <div class="body-card planet"><span class="name">Tinderhusk</span><span class="type"> ·Planeta</span><div class="desc">Mundo volcánico con una superficie de lava fundida.</div></div>
+        <div class="body-card planet"><span class="name">Heliophon</span><span class="type"> ·Gigante gaseoso</span><div class="desc">Gigante gaseoso con anillos y una atmósfera extrema.</div></div>
+        <div class="body-card planet"><span class="name">Glacielle</span><span class="type"> ·Planeta</span><div class="desc">Mundo helado en la frontera del sistema, con géiseres y terreno congelado.</div></div>
+        <div class="body-card"><span class="name">Kite</span><span class="type"> ·Luna de Qel'Nara</span><div class="desc">La luna más cercana de Qel'Nara y un primer peldaño natural hacia el espacio.</div></div>
+        <div class="body-card"><span class="name">Scorch</span><span class="type"> ·Luna de Heliophon</span><div class="desc">Un mundo marcado por la radiación de su gigante gaseoso.</div></div>
+        <div class="body-card"><span class="name">Iolanthe</span><span class="type"> ·Luna de Heliophon</span><div class="desc">Luna irregular con una gravedad condicionada por la forma de su superficie.</div></div>
+      </div>
+      <p style="color: var(--text-dim); margin-top: 16px; font-size: 0.85em;">...y decenas más por descubrir.</p>
+    </section>
+
+    <section>
+      <h2>Capturas de pantalla</h2>
+      <p style="color: var(--text-dim); margin-bottom: 16px;">Añade capturas de pantalla a <code>presskit/images/</code> y actualiza las rutas de abajo.</p>
+      <div class="screenshots-grid">
+        <img src="images/screenshot-01.png" alt="Rocket launch from Alpha Prime" onclick="window.open(this.src)">
+        <img src="images/screenshot-02.png" alt="Tinderhusk - volcanic world with lava rivers" onclick="window.open(this.src)">
+        <img src="images/screenshot-03.png" alt="Moon base with rocket on launchpad" onclick="window.open(this.src)">
+        <img src="images/screenshot-04.png" alt="Orbital flight with HUD and atmosphere" onclick="window.open(this.src)">
+        <img src="images/screenshot-05.png" alt="Glacielle - frozen moon with ice crystal surface" onclick="window.open(this.src)">
+        <img src="images/screenshot-06.png" alt="Qel'Nara - habitable world with oceans and clouds" onclick="window.open(this.src)">
+      </div>
+    </section>
+
+    <section>
+      <h2>Vídeos</h2>
+      <p style="color: var(--text-dim);"><!-- TODO -->[Inserta aquí el tráiler o el enlace]</p>
+    </section>
+
+    <section>
+      <h2>Logotipo y arte principal</h2>
+      <div style="display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 16px; align-items: flex-start;">
+        <img src="images/logo.png" alt="9.8 logo" style="width: 128px; border-radius: 8px; border: 1px solid var(--panel-border);">
+        <img src="images/keyart.png" alt="9.8 key art" style="max-width: 460px; width: 100%; border-radius: 8px; border: 1px solid var(--panel-border);">
+      </div>
+      <div class="downloads">
+        <a class="dl-btn" href="images/logo.png">Logotipo (PNG)</a>
+        <a class="dl-btn" href="images/keyart.png">Arte principal (PNG)</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Descarga</h2>
+      <div class="downloads">
+        <a class="dl-btn" href="images/9.8-presskit.zip">Descargar todos los materiales (.zip)</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Sobre el estudio</h2>
+      <p>Tremoço Games es un estudio independiente unipersonal fundado por el músico y compositor André B. Silva, afincado en Oporto. 9.8 es su primer juego, fruto de una pasión de toda la vida por la exploración espacial y la física, combinada con su trayectoria en composición musical.</p>
+    </section>
+
+    <section>
+      <h2>Créditos</h2>
+      <ul class="credits-list">
+        <li><strong>André B. Silva / Tremoço Games</strong> <span class="role">Diseño, programación y arte</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Contacto</h2>
+      <table class="fact-table">
+        <tr><td>Correo de prensa</td><td>tremocogames@gmail.com</td></tr>
+        <tr><td>Steam</td><td><a href="https://store.steampowered.com/app/4247050/98/" target="_blank">store.steampowered.com/app/4247050/98/</a></td></tr>
+        <tr><td>Twitter / X</td><td><a href="https://x.com/9point8Game" target="_blank">@9point8Game</a></td></tr>
+        <tr><td>Discord</td><td><a href="https://discord.com/invite/Hj2UgH7zwf" target="_blank">discord.com/invite/Hj2UgH7zwf</a></td></tr>
+        <tr><td>YouTube</td><td><a href="https://www.youtube.com/channel/UCIASc31MGWTo4lO0Zg-qr5A" target="_blank">YouTube Channel</a></td></tr>
+      </table>
+    </section>
+  </div><!-- /es -->
+
+  <!-- ==================== FRENCH ==================== -->
+  <div data-lang="fr">
+    <section>
+      <div class="factsheet">
+        <div>
+          <h2>Fiche technique</h2>
+          <table class="fact-table">
+            <tr><td>Développeur</td><td><strong>André B. Silva / Tremoço Games</strong></td></tr>
+            <tr><td>Sortie</td><td>Accès anticipé 2026</td></tr>
+            <tr><td>Plateformes</td><td>Windows, Mac, Linux</td></tr>
+            <tr><td>Genre</td><td>Simulateur d'agence spatiale basé sur la physique</td></tr>
+            <tr><td>Prix</td><td>À annoncer</td></tr>
+            <tr><td>Langues</td><td>EN, PT, ES, FR, DE, ZH, RU</td></tr>
+            <tr><td>Contact Presse</td><td>tremocogames@gmail.com</td></tr>
+          </table>
+        </div>
+        <div>
+          <h2>Description</h2>
+          <p><strong>9.8</strong> est un simulateur d'agence spatiale fondé sur des principes physiques réalistes. Au fil de la progression, le joueur recherche de nouvelles technologies, développe pièces et systèmes, puis assemble ses véhicules dans un éditeur ouvert. Le jeu l'amène à maîtriser les lancements, les manœuvres orbitales et les atterrissages sur des mondes extraterrestres, à établir des colonies et à soutenir un réseau logistique au sein d'un système stellaire façonné à la main.</p>
+          <p>Chaque planète et chaque lune possèdent une identité propre, avec des surfaces 3D en WebGL et des conditions de vol spécifiques. La simulation prend en compte des orbites réalistes, la traînée atmosphérique, la chaleur de la rentrée et le comportement des liquides et des carburants. Au-delà des opérations spatiales, 9.8 intègre rovers, bateaux et aéronefs, et conduit progressivement l'agence vers l'expansion interstellaire. La sortie en accès anticipé est prévue pour 2026, accompagnée d'une bande-son originale et d'un plan de développement déjà établi jusqu'à la version 1.0.</p>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2>Caractéristiques</h2>
+      <div class="features-grid">
+        <div class="feature"><h3>Recherche, développement et assemblage</h3><p>De la recherche scientifique à la rampe de lancement, le jeu couvre l'ensemble du processus de création des véhicules. Boucliers thermiques, parachutes, RCS, pieds d'atterrissage, séparation d'étages, amarrage et bien plus encore.</p></div>
+        <div class="feature"><h3>Orbites réalistes et gravitation entre plusieurs corps</h3><p>La simulation prend en compte l'interaction gravitationnelle entre plusieurs corps, la traînée atmosphérique, la chaleur de la rentrée, l'aérodynamique et le comportement des liquides et des carburants. Sans rails ni simplifications artificielles.</p></div>
+        <div class="feature"><h3>Mondes 3D en WebGL</h3><p>Plus de 50 planètes et lunes possèdent une identité visuelle propre, entre coulées de lave, geysers gelés, paysages extraterrestres, systèmes d'anneaux et cycles jour-nuit.</p></div>
+        <div class="feature"><h3>Opérations de surface et en orbite</h3><p>Rovers, bateaux et aéronefs enrichissent l'exploration planétaire, tandis que mines, centrales, modules d'habitation, stations spatiales et infrastructures orbitales soutiennent l'expansion de l'agence.</p></div>
+        <div class="feature"><h3>Expansion interstellaire</h3><p>La progression débute dans le système Solara avant de s'étendre à plusieurs systèmes stellaires, chacun avec ses mondes, ses lunes et ses enjeux propres.</p></div>
+        <div class="feature"><h3>Extraction, raffinage et logistique</h3><p>La collecte de matières premières, la transformation des ressources et le transport de fret entre les planètes occupent une place centrale dans la gestion de l'agence.</p></div>
+        <div class="feature"><h3>Multijoueur</h3><p>Les modes coopératif et compétitif permettent de partager un programme spatial ou de rivaliser pour les contrats et le territoire entre agences concurrentes.</p></div>
+        <div class="feature"><h3>Science et progression</h3><p>La recherche scientifique débloque de nouvelles technologies, destinations et capacités. Chaque mission participe à l'évolution de l'agence.</p></div>
+        <div class="feature"><h3>Bande-son originale</h3><p>Une bande-son composée spécialement pour le jeu, de la tension du lancement à la solitude de l'espace profond.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Quelques mondes du système Solara</h2>
+      <p style="color: var(--text-muted); margin-bottom: 16px;">Le système Solara réunit plus de 50 mondes façonnés à la main. En voici quelques-uns.</p>
+      <div class="bodies-list">
+        <div class="body-card star"><span class="name">Solara</span><span class="type"> ·Étoile</span><div class="desc">L'étoile centrale du système.</div></div>
+        <div class="body-card planet"><span class="name">Qel'Nara</span><span class="type"> ·Planète</span><div class="desc">Monde d'origine, de type terrestre, avec nuages, mers et atmosphère.</div></div>
+        <div class="body-card planet"><span class="name">Tinderhusk</span><span class="type"> ·Planète</span><div class="desc">Monde volcanique à la surface couverte de lave en fusion.</div></div>
+        <div class="body-card planet"><span class="name">Heliophon</span><span class="type"> ·Géante gazeuse</span><div class="desc">Géante gazeuse à anneaux, dotée d'une atmosphère extrême.</div></div>
+        <div class="body-card planet"><span class="name">Glacielle</span><span class="type"> ·Planète</span><div class="desc">Monde glacé aux confins du système, avec geysers et relief gelé.</div></div>
+        <div class="body-card"><span class="name">Kite</span><span class="type"> ·Lune de Qel'Nara</span><div class="desc">Lune la plus proche de Qel'Nara et premier jalon naturel vers l'espace.</div></div>
+        <div class="body-card"><span class="name">Scorch</span><span class="type"> ·Lune de Heliophon</span><div class="desc">Monde marqué par le rayonnement de sa géante gazeuse.</div></div>
+        <div class="body-card"><span class="name">Iolanthe</span><span class="type"> ·Lune de Heliophon</span><div class="desc">Lune irrégulière dont la gravité suit la forme de la surface.</div></div>
+      </div>
+      <p style="color: var(--text-dim); margin-top: 16px; font-size: 0.85em;">...et des dizaines d'autres mondes à découvrir.</p>
+    </section>
+
+    <section>
+      <h2>Captures d'écran</h2>
+      <p style="color: var(--text-dim); margin-bottom: 16px;">Ajoutez des captures d'écran dans <code>presskit/images/</code> et mettez à jour les chemins ci-dessous.</p>
+      <div class="screenshots-grid">
+        <img src="images/screenshot-01.png" alt="Rocket launch from Alpha Prime" onclick="window.open(this.src)">
+        <img src="images/screenshot-02.png" alt="Tinderhusk - volcanic world with lava rivers" onclick="window.open(this.src)">
+        <img src="images/screenshot-03.png" alt="Moon base with rocket on launchpad" onclick="window.open(this.src)">
+        <img src="images/screenshot-04.png" alt="Orbital flight with HUD and atmosphere" onclick="window.open(this.src)">
+        <img src="images/screenshot-05.png" alt="Glacielle - frozen moon with ice crystal surface" onclick="window.open(this.src)">
+        <img src="images/screenshot-06.png" alt="Qel'Nara - habitable world with oceans and clouds" onclick="window.open(this.src)">
+      </div>
+    </section>
+
+    <section>
+      <h2>Vidéos</h2>
+      <p style="color: var(--text-dim);"><!-- TODO -->[Intégrez la bande-annonce ou ajoutez le lien ici]</p>
+    </section>
+
+    <section>
+      <h2>Logo et illustration principale</h2>
+      <div style="display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 16px; align-items: flex-start;">
+        <img src="images/logo.png" alt="9.8 logo" style="width: 128px; border-radius: 8px; border: 1px solid var(--panel-border);">
+        <img src="images/keyart.png" alt="9.8 key art" style="max-width: 460px; width: 100%; border-radius: 8px; border: 1px solid var(--panel-border);">
+      </div>
+      <div class="downloads">
+        <a class="dl-btn" href="images/logo.png">Logo (PNG)</a>
+        <a class="dl-btn" href="images/keyart.png">Illustration principale (PNG)</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Téléchargement</h2>
+      <div class="downloads">
+        <a class="dl-btn" href="images/9.8-presskit.zip">Télécharger tous les éléments (.zip)</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>À propos du studio</h2>
+      <p>Tremoço Games est un studio indépendant fondé par le musicien et compositeur André B. Silva, installé à Porto. 9.8 est son premier jeu, né d'une passion de longue date pour l'exploration spatiale et la physique, nourrie par des années de composition musicale.</p>
+    </section>
+
+    <section>
+      <h2>Crédits</h2>
+      <ul class="credits-list">
+        <li><strong>André B. Silva / Tremoço Games</strong> <span class="role">Conception, programmation et art</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Contact</h2>
+      <table class="fact-table">
+        <tr><td>E-mail presse</td><td>tremocogames@gmail.com</td></tr>
+        <tr><td>Steam</td><td><a href="https://store.steampowered.com/app/4247050/98/" target="_blank">store.steampowered.com/app/4247050/98/</a></td></tr>
+        <tr><td>Twitter / X</td><td><a href="https://x.com/9point8Game" target="_blank">@9point8Game</a></td></tr>
+        <tr><td>Discord</td><td><a href="https://discord.com/invite/Hj2UgH7zwf" target="_blank">discord.com/invite/Hj2UgH7zwf</a></td></tr>
+        <tr><td>YouTube</td><td><a href="https://www.youtube.com/channel/UCIASc31MGWTo4lO0Zg-qr5A" target="_blank">YouTube Channel</a></td></tr>
+      </table>
+    </section>
+  </div><!-- /fr -->
+
+  <!-- ==================== GERMAN ==================== -->
+  <div data-lang="de">
+    <section>
+      <div class="factsheet">
+        <div>
+          <h2>Steckbrief</h2>
+          <table class="fact-table">
+            <tr><td>Entwickler</td><td><strong>André B. Silva / Tremoço Games</strong></td></tr>
+            <tr><td>Veröffentlichung</td><td>Early Access 2026</td></tr>
+            <tr><td>Plattformen</td><td>Windows, Mac, Linux</td></tr>
+            <tr><td>Genre</td><td>Physikbasierte Weltraumagentur-Simulation</td></tr>
+            <tr><td>Preis</td><td>Noch offen</td></tr>
+            <tr><td>Sprachen</td><td>EN, PT, ES, FR, DE, ZH, RU</td></tr>
+            <tr><td>Pressekontakt</td><td>tremocogames@gmail.com</td></tr>
+          </table>
+        </div>
+        <div>
+          <h2>Beschreibung</h2>
+          <p><strong>9.8</strong> ist eine Weltraumagentur-Simulation auf Basis realistischer Physik. Im Verlauf der Kampagne werden neue Technologien erforscht, Komponenten und Systeme entwickelt und Fahrzeuge in einem offenen Editor zusammengesetzt. Zu bewältigen sind Starts, Orbitalmanöver und Landungen auf fremden Welten ebenso wie Kolonieaufbau und die Versorgung eines handgefertigten Sternensystems.</p>
+          <p>Jeder Planet und jeder Mond besitzt eine eigene Identität, mit 3D-Oberflächen in WebGL und unterschiedlichen Flugbedingungen. Die Simulation berücksichtigt reale Umlaufbahnen, Luftwiderstand, Wiedereintrittshitze sowie das Verhalten von Flüssigkeiten und Treibstoffen. Neben der Raumfahrt gehören Rover, Boote und Flugzeuge ebenso zum Einsatzspektrum, und die Agentur entwickelt sich Schritt für Schritt bis zur interstellaren Expansion. Der Start im Early Access ist für 2026 vorgesehen, begleitet von einem eigens komponierten Soundtrack und einem klaren Entwicklungsplan bis Version 1.0.</p>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2>Merkmale</h2>
+      <div class="features-grid">
+        <div class="feature"><h3>Forschung, Entwicklung und Raketenbau</h3><p>Von der wissenschaftlichen Forschung bis zur Startrampe deckt das Spiel den gesamten Entstehungsprozess neuer Fahrzeuge ab. Hitzeschilde, Fallschirme, RCS, Landebeine, Stufentrennung, Andocken und mehr.</p></div>
+        <div class="feature"><h3>Reale Orbits und Gravitation mehrerer Himmelskörper</h3><p>Die Simulation berücksichtigt das Zusammenspiel mehrerer Gravitationsquellen, Luftwiderstand, Wiedereintrittshitze, Aerodynamik und das Verhalten von Flüssigkeiten und Treibstoffen. Ohne Schienen und ohne künstliche Vereinfachungen.</p></div>
+        <div class="feature"><h3>3D-Welten in WebGL</h3><p>Über 50 Planeten und Monde mit eigener visueller Identität, von Lavaströmen und gefrorenen Geysiren bis zu außerirdischen Landschaften, Ringsystemen und Tag-Nacht-Zyklen.</p></div>
+        <div class="feature"><h3>Einsätze auf Oberflächen und im Orbit</h3><p>Rover, Boote und Flugzeuge erweitern die planetare Erkundung, während Minen, Kraftwerke, Habitatmodule, Raumstationen und orbitale Infrastruktur die Expansion der Agentur tragen.</p></div>
+        <div class="feature"><h3>Interstellare Expansion</h3><p>Der Fortschritt beginnt im Solara-System und führt in mehrere Sternensysteme, jedes mit eigenen Welten, Monden und Herausforderungen.</p></div>
+        <div class="feature"><h3>Rohstoffe, Verarbeitung und Logistik</h3><p>Rohstoffabbau, Ressourcenverarbeitung und Frachttransport zwischen Planeten sind ein zentraler Bestandteil des Agenturmanagements.</p></div>
+        <div class="feature"><h3>Mehrspieler</h3><p>Kooperative und kompetitive Modi ermöglichen ein gemeinsames Raumfahrtprogramm oder den Wettbewerb rivalisierender Agenturen um Aufträge und Territorium.</p></div>
+        <div class="feature"><h3>Wissenschaft und Fortschritt</h3><p>Wissenschaftliche Forschung schaltet neue Technologien, Ziele und Fähigkeiten frei. Jede Mission trägt zur Weiterentwicklung der Agentur bei.</p></div>
+        <div class="feature"><h3>Original-Soundtrack</h3><p>Ein eigens für das Spiel komponierter Soundtrack, von der Spannung des Starts bis zur Einsamkeit des tiefen Weltraums.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Einige Welten des Solara-Systems</h2>
+      <p style="color: var(--text-muted); margin-bottom: 16px;">Das Solara-System umfasst über 50 handgefertigte Welten. Hier sind einige davon.</p>
+      <div class="bodies-list">
+        <div class="body-card star"><span class="name">Solara</span><span class="type"> ·Stern</span><div class="desc">Der Zentralstern des Systems.</div></div>
+        <div class="body-card planet"><span class="name">Qel'Nara</span><span class="type"> ·Planet</span><div class="desc">Heimatwelt mit erdähnlichem Charakter, Wolken, Meeren und Atmosphäre.</div></div>
+        <div class="body-card planet"><span class="name">Tinderhusk</span><span class="type"> ·Planet</span><div class="desc">Vulkanische Welt mit glühender Lavaoberfläche.</div></div>
+        <div class="body-card planet"><span class="name">Heliophon</span><span class="type"> ·Gasriese</span><div class="desc">Gasriese mit Ringsystem und extremer Atmosphäre.</div></div>
+        <div class="body-card planet"><span class="name">Glacielle</span><span class="type"> ·Planet</span><div class="desc">Eiswelt an der Grenze des Systems, mit Geysiren und gefrorenem Terrain.</div></div>
+        <div class="body-card"><span class="name">Kite</span><span class="type"> ·Mond von Qel'Nara</span><div class="desc">Nächster Mond von Qel'Nara und ein natürlicher erster Schritt ins All.</div></div>
+        <div class="body-card"><span class="name">Scorch</span><span class="type"> ·Mond von Heliophon</span><div class="desc">Eine von der Strahlung ihres Gasriesen gezeichnete Welt.</div></div>
+        <div class="body-card"><span class="name">Iolanthe</span><span class="type"> ·Mond von Heliophon</span><div class="desc">Unregelmäßiger Mond mit von der Oberflächenform geprägter Schwerkraft.</div></div>
+      </div>
+      <p style="color: var(--text-dim); margin-top: 16px; font-size: 0.85em;">...und Dutzende weitere warten darauf, entdeckt zu werden.</p>
+    </section>
+
+    <section>
+      <h2>Screenshots</h2>
+      <p style="color: var(--text-dim); margin-bottom: 16px;">Lege Screenshots in <code>presskit/images/</code> ab und aktualisiere die Pfade unten.</p>
+      <div class="screenshots-grid">
+        <img src="images/screenshot-01.png" alt="Rocket launch from Alpha Prime" onclick="window.open(this.src)">
+        <img src="images/screenshot-02.png" alt="Tinderhusk - volcanic world with lava rivers" onclick="window.open(this.src)">
+        <img src="images/screenshot-03.png" alt="Moon base with rocket on launchpad" onclick="window.open(this.src)">
+        <img src="images/screenshot-04.png" alt="Orbital flight with HUD and atmosphere" onclick="window.open(this.src)">
+        <img src="images/screenshot-05.png" alt="Glacielle - frozen moon with ice crystal surface" onclick="window.open(this.src)">
+        <img src="images/screenshot-06.png" alt="Qel'Nara - habitable world with oceans and clouds" onclick="window.open(this.src)">
+      </div>
+    </section>
+
+    <section>
+      <h2>Videos</h2>
+      <p style="color: var(--text-dim);"><!-- TODO -->[Trailer oder Link hier einfügen]</p>
+    </section>
+
+    <section>
+      <h2>Logo und Key Art</h2>
+      <div style="display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 16px; align-items: flex-start;">
+        <img src="images/logo.png" alt="9.8 logo" style="width: 128px; border-radius: 8px; border: 1px solid var(--panel-border);">
+        <img src="images/keyart.png" alt="9.8 key art" style="max-width: 460px; width: 100%; border-radius: 8px; border: 1px solid var(--panel-border);">
+      </div>
+      <div class="downloads">
+        <a class="dl-btn" href="images/logo.png">Logo (PNG)</a>
+        <a class="dl-btn" href="images/keyart.png">Key Art (PNG)</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Download</h2>
+      <div class="downloads">
+        <a class="dl-btn" href="images/9.8-presskit.zip">Alle Materialien herunterladen (.zip)</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Über das Studio</h2>
+      <p>Tremoço Games ist ein Ein-Personen-Indie-Studio des Musikers und Komponisten André B. Silva aus Porto. 9.8 ist sein erstes Spiel und vereint eine lebenslange Begeisterung für Weltraumforschung und Physik mit jahrelanger Erfahrung in der Musikkomposition.</p>
+    </section>
+
+    <section>
+      <h2>Mitwirkende</h2>
+      <ul class="credits-list">
+        <li><strong>André B. Silva / Tremoço Games</strong> <span class="role">Design, Programmierung, Grafik</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Kontakt</h2>
+      <table class="fact-table">
+        <tr><td>Presse-E-Mail</td><td>tremocogames@gmail.com</td></tr>
+        <tr><td>Steam</td><td><a href="https://store.steampowered.com/app/4247050/98/" target="_blank">store.steampowered.com/app/4247050/98/</a></td></tr>
+        <tr><td>Twitter / X</td><td><a href="https://x.com/9point8Game" target="_blank">@9point8Game</a></td></tr>
+        <tr><td>Discord</td><td><a href="https://discord.com/invite/Hj2UgH7zwf" target="_blank">discord.com/invite/Hj2UgH7zwf</a></td></tr>
+        <tr><td>YouTube</td><td><a href="https://www.youtube.com/channel/UCIASc31MGWTo4lO0Zg-qr5A" target="_blank">YouTube Channel</a></td></tr>
+      </table>
+    </section>
+  </div><!-- /de -->
+
+  <!-- ==================== CHINESE ==================== -->
+  <div data-lang="zh">
+    <section>
+      <div class="factsheet">
+        <div>
+          <h2>基本信息</h2>
+          <table class="fact-table">
+            <tr><td>开发者</td><td><strong>André B. Silva / Tremoço Games</strong></td></tr>
+            <tr><td>发售</td><td>2026 年抢先体验</td></tr>
+            <tr><td>平台</td><td>Windows, Mac, Linux</td></tr>
+            <tr><td>类型</td><td>基于真实物理的航天机构模拟游戏</td></tr>
+            <tr><td>价格</td><td>待定</td></tr>
+            <tr><td>语言</td><td>EN, PT, ES, FR, DE, ZH, RU</td></tr>
+            <tr><td>媒体联系</td><td>tremocogames@gmail.com</td></tr>
+          </table>
+        </div>
+        <div>
+          <h2>游戏简介</h2>
+          <p><strong>9.8</strong> 是一款建立在真实物理基础上的航天机构模拟游戏。玩家需要研究新技术、开发部件与系统，并在自由编辑器中组装载具；随后完成发射、轨道机动和异星着陆，建立殖民地，并在一套手工打造的恒星系统中维持跨星球补给网络。</p>
+          <p>每一颗行星和卫星都拥有独特的 3D WebGL 外观与各不相同的飞行环境。模拟系统涵盖真实轨道、大气阻力、再入热效应，以及液体与燃料的运动表现。除太空任务外，游戏还支持漫游车、船只与飞行器操作，并让航天机构逐步迈向星际扩张。《9.8》计划于 2026 年以抢先体验形式推出，配有原创配乐，并已规划清晰的后续开发路线，直至 1.0 版本。</p>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2>游戏特色</h2>
+      <div class="features-grid">
+        <div class="feature"><h3>研发与载具组装</h3><p>从科研推进到发射平台，游戏覆盖完整的载具研发流程。隔热罩、降落伞、RCS、着陆腿、级间分离、对接等系统均可纳入设计。</p></div>
+        <div class="feature"><h3>真实轨道与多天体引力</h3><p>模拟系统会计算多个天体之间的引力关系，以及大气阻力、再入热效应、空气动力学和液体与燃料的运动表现。不依赖轨道脚本，也不使用人为简化。</p></div>
+        <div class="feature"><h3>WebGL 呈现的 3D 世界</h3><p>50 多颗行星与卫星拥有各自鲜明的视觉特征，从熔岩河、冻结间歇泉到异星地貌、行星环系统和昼夜循环。</p></div>
+        <div class="feature"><h3>地表与轨道行动</h3><p>漫游车、船只和飞行器拓展了行星探索方式，而矿场、发电站、居住舱、空间站和轨道设施则支撑着机构的持续扩张。</p></div>
+        <div class="feature"><h3>星际扩张</h3><p>游戏进程从 Solara 星系起步，逐步扩展到多个恒星系统，每个系统都有独立的世界、卫星和挑战。</p></div>
+        <div class="feature"><h3>采集、加工与物流</h3><p>原材料开采、资源加工以及跨星球货运，是机构运营中的重要组成部分。</p></div>
+        <div class="feature"><h3>多人玩法</h3><p>合作与对抗模式既支持共同经营同一太空计划，也支持不同机构围绕合同与领地展开竞争。</p></div>
+        <div class="feature"><h3>科研与成长</h3><p>科学研究将逐步解锁新的科技、目的地与能力，每一次任务都会推动航天机构继续发展。</p></div>
+        <div class="feature"><h3>原创配乐</h3><p>专为游戏创作的配乐，从发射前的紧张到深空的孤寂，塑造完整的太空氛围。</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Solara 星系的几个代表世界</h2>
+      <p style="color: var(--text-muted); margin-bottom: 16px;">Solara 星系中有 50 多个手工打造的世界，以下仅列举其中一部分。</p>
+      <div class="bodies-list">
+        <div class="body-card star"><span class="name">Solara</span><span class="type"> ·恒星</span><div class="desc">该星系的中心恒星。</div></div>
+        <div class="body-card planet"><span class="name">Qel'Nara</span><span class="type"> ·行星</span><div class="desc">母星，拥有类地特征，以及云层、海洋与大气。</div></div>
+        <div class="body-card planet"><span class="name">Tinderhusk</span><span class="type"> ·行星</span><div class="desc">遍布熔岩的火山世界。</div></div>
+        <div class="body-card planet"><span class="name">Heliophon</span><span class="type"> ·气态巨行星</span><div class="desc">拥有行星环和极端大气环境的气态巨行星。</div></div>
+        <div class="body-card planet"><span class="name">Glacielle</span><span class="type"> ·行星</span><div class="desc">位于边境的冰封世界，遍布间歇泉与冻结地形。</div></div>
+        <div class="body-card"><span class="name">Kite</span><span class="type"> ·Qel'Nara 的卫星</span><div class="desc">Qel'Nara 最近的卫星，也是迈向太空的自然第一步。</div></div>
+        <div class="body-card"><span class="name">Scorch</span><span class="type"> ·Heliophon 的卫星</span><div class="desc">长期受到所属气态巨行星辐射影响的焦灼世界。</div></div>
+        <div class="body-card"><span class="name">Iolanthe</span><span class="type"> ·Heliophon 的卫星</span><div class="desc">一颗形态不规则、重力受表面形状影响的卫星。</div></div>
+      </div>
+      <p style="color: var(--text-dim); margin-top: 16px; font-size: 0.85em;">……还有数十个世界等待发现。</p>
+    </section>
+
+    <section>
+      <h2>截图</h2>
+      <p style="color: var(--text-dim); margin-bottom: 16px;">将截图放入 <code>presskit/images/</code>，并更新下方路径。</p>
+      <div class="screenshots-grid">
+        <img src="images/screenshot-01.png" alt="Rocket launch from Alpha Prime" onclick="window.open(this.src)">
+        <img src="images/screenshot-02.png" alt="Tinderhusk - volcanic world with lava rivers" onclick="window.open(this.src)">
+        <img src="images/screenshot-03.png" alt="Moon base with rocket on launchpad" onclick="window.open(this.src)">
+        <img src="images/screenshot-04.png" alt="Orbital flight with HUD and atmosphere" onclick="window.open(this.src)">
+        <img src="images/screenshot-05.png" alt="Glacielle - frozen moon with ice crystal surface" onclick="window.open(this.src)">
+        <img src="images/screenshot-06.png" alt="Qel'Nara - habitable world with oceans and clouds" onclick="window.open(this.src)">
+      </div>
+    </section>
+
+    <section>
+      <h2>视频</h2>
+      <p style="color: var(--text-dim);"><!-- TODO -->[在此嵌入预告片或添加链接]</p>
+    </section>
+
+    <section>
+      <h2>Logo 与主视觉</h2>
+      <div style="display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 16px; align-items: flex-start;">
+        <img src="images/logo.png" alt="9.8 logo" style="width: 128px; border-radius: 8px; border: 1px solid var(--panel-border);">
+        <img src="images/keyart.png" alt="9.8 key art" style="max-width: 460px; width: 100%; border-radius: 8px; border: 1px solid var(--panel-border);">
+      </div>
+      <div class="downloads">
+        <a class="dl-btn" href="images/logo.png">Logo（PNG）</a>
+        <a class="dl-btn" href="images/keyart.png">主视觉（PNG）</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>下载</h2>
+      <div class="downloads">
+        <a class="dl-btn" href="images/9.8-presskit.zip">下载全部素材（.zip）</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>关于工作室</h2>
+      <p>Tremoço Games 是一间由驻波尔图的音乐人兼作曲家 André B. Silva 创立的独立个人工作室。9.8 是他的首款游戏，将对太空探索和物理学的热爱与多年的音乐创作经验融为一体。</p>
+    </section>
+
+    <section>
+      <h2>制作名单</h2>
+      <ul class="credits-list">
+        <li><strong>André B. Silva / Tremoço Games</strong> <span class="role">创意、程序与美术</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>联系信息</h2>
+      <table class="fact-table">
+        <tr><td>媒体邮箱</td><td>tremocogames@gmail.com</td></tr>
+        <tr><td>Steam</td><td><a href="https://store.steampowered.com/app/4247050/98/" target="_blank">store.steampowered.com/app/4247050/98/</a></td></tr>
+        <tr><td>Twitter / X</td><td><a href="https://x.com/9point8Game" target="_blank">@9point8Game</a></td></tr>
+        <tr><td>Discord</td><td><a href="https://discord.com/invite/Hj2UgH7zwf" target="_blank">discord.com/invite/Hj2UgH7zwf</a></td></tr>
+        <tr><td>YouTube</td><td><a href="https://www.youtube.com/channel/UCIASc31MGWTo4lO0Zg-qr5A" target="_blank">YouTube Channel</a></td></tr>
+      </table>
+    </section>
+  </div><!-- /zh -->
+
+  <!-- ==================== RUSSIAN ==================== -->
+  <div data-lang="ru">
+    <section>
+      <div class="factsheet">
+        <div>
+          <h2>Информация</h2>
+          <table class="fact-table">
+            <tr><td>Разработчик</td><td><strong>André B. Silva / Tremoço Games</strong></td></tr>
+            <tr><td>Выход</td><td>Ранний доступ 2026</td></tr>
+            <tr><td>Платформы</td><td>Windows, Mac, Linux</td></tr>
+            <tr><td>Жанр</td><td>Симулятор космического агентства на основе реальной физики</td></tr>
+            <tr><td>Цена</td><td>Уточняется</td></tr>
+            <tr><td>Языки</td><td>EN, PT, ES, FR, DE, ZH, RU</td></tr>
+            <tr><td>Пресс-контакт</td><td>tremocogames@gmail.com</td></tr>
+          </table>
+        </div>
+        <div>
+          <h2>Описание</h2>
+          <p><strong>9.8</strong> — симулятор космического агентства, построенный на реалистичной физике. В ходе кампании игрок исследует новые технологии, разрабатывает узлы и системы, а затем собирает аппараты в свободном редакторе. Ему предстоит освоить запуски, орбитальные манёвры и посадки на чужих мирах, основать колонии и поддерживать логистическую сеть в созданной вручную звёздной системе.</p>
+          <p>Каждая планета и каждый спутник обладают собственным обликом благодаря 3D-поверхностям в WebGL и различным условиям полёта. Симуляция учитывает реальные орбиты, сопротивление атмосферы, нагрев при входе и поведение жидкостей и топлива. Помимо космических операций, 9.8 включает управление роверами, катерами и самолётами и постепенно выводит агентство к межзвёздной экспансии. Выход в раннем доступе запланирован на 2026 год; игру сопровождают оригинальный саундтрек и чёткий план развития вплоть до версии 1.0.</p>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2>Особенности</h2>
+      <div class="features-grid">
+        <div class="feature"><h3>Исследования, разработка и сборка</h3><p>От научных исследований до стартовой площадки игра охватывает весь цикл создания новых аппаратов. Теплозащита, парашюты, RCS, посадочные опоры, разделение ступеней, стыковка и многое другое.</p></div>
+        <div class="feature"><h3>Реальные орбиты и гравитация нескольких тел</h3><p>Симуляция учитывает взаимодействие нескольких источников гравитации, сопротивление атмосферы, нагрев при входе, аэродинамику и поведение жидкостей и топлива. Без рельс и без искусственных упрощений.</p></div>
+        <div class="feature"><h3>3D-миры в WebGL</h3><p>Более 50 планет и спутников обладают собственной визуальной идентичностью: лавовые потоки, замёрзшие гейзеры, инопланетные ландшафты, кольцевые системы и смена дня и ночи.</p></div>
+        <div class="feature"><h3>Операции на поверхности и на орбите</h3><p>Роверы, катера и самолёты расширяют исследование планет, а шахты, электростанции, жилые модули, орбитальная инфраструктура и космические станции поддерживают развитие агентства.</p></div>
+        <div class="feature"><h3>Межзвёздная экспансия</h3><p>Прогресс начинается в системе Solara и постепенно выводит агентство к нескольким звёздным системам, каждая со своими мирами, спутниками и вызовами.</p></div>
+        <div class="feature"><h3>Добыча, переработка и логистика</h3><p>Добыча сырья, переработка ресурсов и перевозка грузов между планетами занимают важное место в управлении агентством.</p></div>
+        <div class="feature"><h3>Мультиплеер</h3><p>Кооперативный и соревновательный режимы позволяют развивать общую космическую программу или бороться за контракты и территорию между соперничающими агентствами.</p></div>
+        <div class="feature"><h3>Наука и прогресс</h3><p>Научные исследования открывают новые технологии, направления и возможности. Каждая миссия вносит вклад в развитие агентства.</p></div>
+        <div class="feature"><h3>Оригинальный саундтрек</h3><p>Музыка, написанная специально для игры, передаёт путь от напряжения старта до одиночества глубокого космоса.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Некоторые миры системы Solara</h2>
+      <p style="color: var(--text-muted); margin-bottom: 16px;">Система Solara объединяет более 50 созданных вручную миров. Ниже приведены лишь некоторые из них.</p>
+      <div class="bodies-list">
+        <div class="body-card star"><span class="name">Solara</span><span class="type"> ·Звезда</span><div class="desc">Центральная звезда системы.</div></div>
+        <div class="body-card planet"><span class="name">Qel'Nara</span><span class="type"> ·Планета</span><div class="desc">Родной мир земного типа с облаками, морями и атмосферой.</div></div>
+        <div class="body-card planet"><span class="name">Tinderhusk</span><span class="type"> ·Планета</span><div class="desc">Вулканический мир с поверхностью из расплавленной лавы.</div></div>
+        <div class="body-card planet"><span class="name">Heliophon</span><span class="type"> ·Газовый гигант</span><div class="desc">Газовый гигант с кольцами и экстремальной атмосферой.</div></div>
+        <div class="body-card planet"><span class="name">Glacielle</span><span class="type"> ·Планета</span><div class="desc">Ледяной мир на краю системы, полный гейзеров и промёрзшего рельефа.</div></div>
+        <div class="body-card"><span class="name">Kite</span><span class="type"> ·Спутник Qel'Nara</span><div class="desc">Ближайший спутник Qel'Nara и естественный первый шаг к освоению космоса.</div></div>
+        <div class="body-card"><span class="name">Scorch</span><span class="type"> ·Спутник Heliophon</span><div class="desc">Мир, сформированный жёстким излучением своего газового гиганта.</div></div>
+        <div class="body-card"><span class="name">Iolanthe</span><span class="type"> ·Спутник Heliophon</span><div class="desc">Нерегулярный спутник, гравитация которого определяется формой поверхности.</div></div>
+      </div>
+      <p style="color: var(--text-dim); margin-top: 16px; font-size: 0.85em;">...и ещё десятки миров ждут открытия.</p>
+    </section>
+
+    <section>
+      <h2>Скриншоты</h2>
+      <p style="color: var(--text-dim); margin-bottom: 16px;">Добавь скриншоты в <code>presskit/images/</code> и обнови пути ниже.</p>
+      <div class="screenshots-grid">
+        <img src="images/screenshot-01.png" alt="Rocket launch from Alpha Prime" onclick="window.open(this.src)">
+        <img src="images/screenshot-02.png" alt="Tinderhusk - volcanic world with lava rivers" onclick="window.open(this.src)">
+        <img src="images/screenshot-03.png" alt="Moon base with rocket on launchpad" onclick="window.open(this.src)">
+        <img src="images/screenshot-04.png" alt="Orbital flight with HUD and atmosphere" onclick="window.open(this.src)">
+        <img src="images/screenshot-05.png" alt="Glacielle - frozen moon with ice crystal surface" onclick="window.open(this.src)">
+        <img src="images/screenshot-06.png" alt="Qel'Nara - habitable world with oceans and clouds" onclick="window.open(this.src)">
+      </div>
+    </section>
+
+    <section>
+      <h2>Видео</h2>
+      <p style="color: var(--text-dim);"><!-- TODO -->[Вставь сюда трейлер или ссылку]</p>
+    </section>
+
+    <section>
+      <h2>Логотип и ключевой арт</h2>
+      <div style="display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 16px; align-items: flex-start;">
+        <img src="images/logo.png" alt="9.8 logo" style="width: 128px; border-radius: 8px; border: 1px solid var(--panel-border);">
+        <img src="images/keyart.png" alt="9.8 key art" style="max-width: 460px; width: 100%; border-radius: 8px; border: 1px solid var(--panel-border);">
+      </div>
+      <div class="downloads">
+        <a class="dl-btn" href="images/logo.png">Логотип (PNG)</a>
+        <a class="dl-btn" href="images/keyart.png">Ключевой арт (PNG)</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Скачать</h2>
+      <div class="downloads">
+        <a class="dl-btn" href="images/9.8-presskit.zip">Скачать все материалы (.zip)</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>О студии</h2>
+      <p>Tremoço Games — инди-студия одного человека, основанная музыкантом и композитором Андре Б. Силвой из Порту. 9.8 — его первая игра, объединяющая многолетнюю страсть к космосу и физике с опытом в музыкальной композиции.</p>
+    </section>
+
+    <section>
+      <h2>Авторы</h2>
+      <ul class="credits-list">
+        <li><strong>André B. Silva / Tremoço Games</strong> <span class="role">Дизайн, программирование, арт</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Контакты</h2>
+      <table class="fact-table">
+        <tr><td>Почта для прессы</td><td>tremocogames@gmail.com</td></tr>
+        <tr><td>Steam</td><td><a href="https://store.steampowered.com/app/4247050/98/" target="_blank">store.steampowered.com/app/4247050/98/</a></td></tr>
+        <tr><td>Twitter / X</td><td><a href="https://x.com/9point8Game" target="_blank">@9point8Game</a></td></tr>
+        <tr><td>Discord</td><td><a href="https://discord.com/invite/Hj2UgH7zwf" target="_blank">discord.com/invite/Hj2UgH7zwf</a></td></tr>
+        <tr><td>YouTube</td><td><a href="https://www.youtube.com/channel/UCIASc31MGWTo4lO0Zg-qr5A" target="_blank">YouTube Channel</a></td></tr>
+      </table>
+    </section>
+  </div><!-- /ru -->
+
+</div><!-- /.container -->
+
+<script>
+const presskitMeta = {
+  en: {
+    title: '9.8 - Press Kit',
+    description: 'Press kit for 9.8, a physics-based space agency simulation with N-body orbital mechanics, 3D WebGL planet renders, and 50+ unique celestial bodies.'
+  },
+  pt: {
+    title: '9.8 - Kit de Imprensa',
+    description: 'Kit de imprensa de 9.8, um simulador de agência espacial assente em princípios físicos realistas, com mundos 3D em WebGL, órbitas reais e mais de 50 corpos celestes únicos.'
+  },
+  es: {
+    title: '9.8 - Kit de prensa',
+    description: 'Kit de prensa de 9.8, un simulador de agencia espacial basado en principios físicos realistas, con mundos 3D en WebGL, órbitas reales y más de 50 cuerpos celestes únicos.'
+  },
+  fr: {
+    title: '9.8 - Dossier de presse',
+    description: "Dossier de presse de 9.8, un simulateur d'agence spatiale fondé sur des principes physiques réalistes, avec des mondes 3D en WebGL, des orbites réalistes et plus de 50 corps célestes uniques."
+  },
+  de: {
+    title: '9.8 - Pressekit',
+    description: 'Pressekit zu 9.8, einer Weltraumagentur-Simulation auf Basis realistischer Physik, mit 3D-Welten in WebGL, realen Umlaufbahnen und über 50 einzigartigen Himmelskörpern.'
+  },
+  zh: {
+    title: '9.8 - 媒体资料包',
+    description: '《9.8》媒体资料包：一款建立在真实物理基础上的航天机构模拟游戏，拥有 3D WebGL 世界、真实轨道以及 50 多个独特天体。'
+  },
+  ru: {
+    title: '9.8 - Пресс-кит',
+    description: 'Пресс-кит 9.8 — симулятора космического агентства на реалистичной физике, с 3D-мирами на WebGL, реальными орбитами и более чем 50 уникальными небесными телами.'
+  }
+};
+
+function setLang(lang) {
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    el.style.display = el.getAttribute('data-lang') === lang ? 'revert' : 'none';
+  });
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    const t = btn.textContent.trim().toLowerCase();
+    btn.classList.toggle('active', t === lang || (lang === 'zh' && btn.textContent.trim() === '中文'));
+  });
+  const meta = presskitMeta[lang] || presskitMeta.en;
+  document.title = meta.title;
+  const desc = document.querySelector('meta[name="description"]');
+  if (desc) desc.setAttribute('content', meta.description);
+  try { localStorage.setItem('presskit-lang', lang); } catch(e) {}
+}
+try {
+  const saved = localStorage.getItem('presskit-lang');
+  if (saved) setLang(saved);
+} catch(e) {}
+</script>
+
+</body>
+</html>
