@@ -340,6 +340,26 @@
       font-size: 0.85em;
     }
 
+    /* ===== Quotes ===== */
+    .quotes-list { display: flex; flex-direction: column; gap: 14px; }
+    .quote-card {
+      background: rgba(15, 15, 25, 0.9);
+      border-left: 3px solid var(--cyan);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+    }
+    .quote-card .text {
+      font-style: italic;
+      color: var(--text-primary);
+      font-size: 0.92em;
+      line-height: 1.5;
+      margin-bottom: 6px;
+    }
+    .quote-card .author {
+      color: var(--text-dim);
+      font-size: 0.82em;
+    }
+
     /* ===== Responsive ===== */
     @media (max-width: 700px) {
       .factsheet { grid-template-columns: 1fr; }
@@ -442,6 +462,16 @@
       </div>
     </section>
 
+    <section>
+      <h2>What Players Are Saying</h2>
+      <div class="quotes-list">
+        <div class="quote-card"><div class="text">"It was good fun, the little details like the sonic booms in the atmosphere, the planetary variety and mission descriptions added to the charm of a greatly expanded Lunar Lander style game."</div><div class="author">— The Destroyer — Content Creator (30k subscribers)</div></div>
+        <div class="quote-card"><div class="text">"The game is already better than Spaceflight Simulator."</div><div class="author">— Meme man — Discord playtester</div></div>
+        <div class="quote-card"><div class="text">"The gravity is very well polished. I can actually do a gravity assist!"</div><div class="author">— Rowbot838 — Discord playtester</div></div>
+        <div class="quote-card"><div class="text">"Always wanted something like that in a space game."</div><div class="author">— Jammer — Discord playtester</div></div>
+      </div>
+    </section>
+
 
     <div style="margin: 24px 0; border-radius: 8px; overflow: hidden; border: 1px solid rgba(120, 220, 255, 0.15)">
       <img src="Gifs/LaunchtoorbitApr.gif" alt="Launch to orbit gameplay" style="width: 100%; display: block">
@@ -507,6 +537,13 @@
       </div>
     </div>
 
+    <section style="text-align: center;">
+      <h2>Try It Yourself</h2>
+      <p>Give it a try with the closed playtest.</p>
+      <p style="margin: 12px 0;"><strong>v0.5.4</strong> · Password: <code>neonrockets</code></p>
+      <a class="dl-btn" href="https://tremocogames.itch.io/9point8-v05-closed-playtest" target="_blank" style="font-size: 1.05em; padding: 14px 32px; margin-top: 8px; display: inline-block;">Play in browser on itch.io</a>
+    </section>
+
     <section>
       <h2>About the Developer</h2>
       <p>Tremoço Games is a solo dev studio by Porto-based musician and composer André B. Silva, working on their first game, 9.8. The project combines a lifelong passion for space exploration and physics with a background in music composition.</p>
@@ -554,6 +591,16 @@
           <p>Monta observatórios, lança telescópios e faz crescer a tua infraestrutura para revelar novos alvos e novas oportunidades. Depois aponta para cima e põe as tuas capacidades de voo à prova.</p>
           <p><strong>9.8 é um simulador 2D de agência espacial onde um universo inteiramente governado pela física (órbitas de N-corpos, atmosferas, gestão térmica, hidrodinâmica) faz com que cada pequeno passo seja conquistado.</strong> Desenvolve o teu programa desde os primeiros saltos até às operações interplanetárias, num aglomerado estelar local desenhado de raiz.</p>
         </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>O Que os Jogadores Dizem</h2>
+      <div class="quotes-list">
+        <div class="quote-card"><div class="text">"It was good fun, the little details like the sonic booms in the atmosphere, the planetary variety and mission descriptions added to the charm of a greatly expanded Lunar Lander style game."</div><div class="author">— The Destroyer — Criador de conteúdo (30 mil subscritores)</div></div>
+        <div class="quote-card"><div class="text">"The game is already better than Spaceflight Simulator."</div><div class="author">— Meme man — Playtester no Discord</div></div>
+        <div class="quote-card"><div class="text">"The gravity is very well polished. I can actually do a gravity assist!"</div><div class="author">— Rowbot838 — Playtester no Discord</div></div>
+        <div class="quote-card"><div class="text">"Always wanted something like that in a space game."</div><div class="author">— Jammer — Playtester no Discord</div></div>
       </div>
     </section>
 
@@ -621,6 +668,13 @@
       </div>
     </div>
 
+    <section style="text-align: center;">
+      <h2>Experimenta Tu Mesmo</h2>
+      <p>Experimenta a versão de playtest fechado.</p>
+      <p style="margin: 12px 0;"><strong>v0.5.4</strong> · Palavra-passe: <code>neonrockets</code></p>
+      <a class="dl-btn" href="https://tremocogames.itch.io/9point8-v05-closed-playtest" target="_blank" style="font-size: 1.05em; padding: 14px 32px; margin-top: 8px; display: inline-block;">Jogar no browser via itch.io</a>
+    </section>
+
     <section>
       <h2>Sobre o Estúdio</h2>
       <p>A Tremoço Games é um estúdio independente de uma só pessoa, criado pelo músico e compositor portuense André B. Silva. 9.8 é o seu primeiro jogo, nascido de uma paixão de longa data pela exploração espacial e pela física, aliada a anos de experiência em composição musical.</p>
@@ -667,6 +721,16 @@
           <p>Levanta observatorios, despliega telescopios y haz crecer tu infraestructura para revelar nuevos objetivos y oportunidades. Después apunta hacia arriba y pon a prueba tus habilidades de vuelo.</p>
           <p><strong>9.8 es un simulador 2D de agencia espacial donde un universo completamente gobernado por la física (órbitas de N-cuerpos, atmósferas, gestión térmica, hidrodinámica) hace que cada pequeño paso sea una conquista.</strong> Desarrolla tu programa desde los primeros saltos hasta las operaciones interplanetarias en un cúmulo estelar local diseñado desde cero.</p>
         </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Lo Que Dicen los Jugadores</h2>
+      <div class="quotes-list">
+        <div class="quote-card"><div class="text">"It was good fun, the little details like the sonic booms in the atmosphere, the planetary variety and mission descriptions added to the charm of a greatly expanded Lunar Lander style game."</div><div class="author">— The Destroyer — Creador de contenido (30 mil suscriptores)</div></div>
+        <div class="quote-card"><div class="text">"The game is already better than Spaceflight Simulator."</div><div class="author">— Meme man — Playtester en Discord</div></div>
+        <div class="quote-card"><div class="text">"The gravity is very well polished. I can actually do a gravity assist!"</div><div class="author">— Rowbot838 — Playtester en Discord</div></div>
+        <div class="quote-card"><div class="text">"Always wanted something like that in a space game."</div><div class="author">— Jammer — Playtester en Discord</div></div>
       </div>
     </section>
 
@@ -734,6 +798,13 @@
       </div>
     </div>
 
+    <section style="text-align: center;">
+      <h2>Pruébalo Tú Mismo</h2>
+      <p>Dale una oportunidad con el playtest cerrado.</p>
+      <p style="margin: 12px 0;"><strong>v0.5.4</strong> · Contraseña: <code>neonrockets</code></p>
+      <a class="dl-btn" href="https://tremocogames.itch.io/9point8-v05-closed-playtest" target="_blank" style="font-size: 1.05em; padding: 14px 32px; margin-top: 8px; display: inline-block;">Jugar en el navegador via itch.io</a>
+    </section>
+
     <section>
       <h2>Sobre el estudio</h2>
       <p>Tremoço Games es un estudio independiente unipersonal fundado por el músico y compositor André B. Silva, afincado en Oporto. 9.8 es su primer juego, fruto de una pasión de toda la vida por la exploración espacial y la física, combinada con su trayectoria en composición musical.</p>
@@ -780,6 +851,16 @@
           <p>Monte des observatoires, déploie des télescopes et fais grandir ton infrastructure pour révéler de nouvelles cibles et de nouvelles opportunités. Ensuite, pointe vers le haut et mets tes talents de pilotage à l'épreuve.</p>
           <p><strong>9.8 est un simulateur 2D d'agence spatiale dans lequel un univers entièrement régi par la physique (orbites à N-corps, atmosphères, gestion thermique, hydrodynamique) fait de chaque petit pas une victoire.</strong> Développe ton programme depuis les premiers bonds jusqu'aux opérations interplanétaires, au sein d'un amas stellaire local conçu sur mesure.</p>
         </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Ce Que Disent les Joueurs</h2>
+      <div class="quotes-list">
+        <div class="quote-card"><div class="text">"It was good fun, the little details like the sonic booms in the atmosphere, the planetary variety and mission descriptions added to the charm of a greatly expanded Lunar Lander style game."</div><div class="author">— The Destroyer — Créateur de contenu (30k abonnés)</div></div>
+        <div class="quote-card"><div class="text">"The game is already better than Spaceflight Simulator."</div><div class="author">— Meme man — Testeur Discord</div></div>
+        <div class="quote-card"><div class="text">"The gravity is very well polished. I can actually do a gravity assist!"</div><div class="author">— Rowbot838 — Testeur Discord</div></div>
+        <div class="quote-card"><div class="text">"Always wanted something like that in a space game."</div><div class="author">— Jammer — Testeur Discord</div></div>
       </div>
     </section>
 
@@ -847,6 +928,13 @@
       </div>
     </div>
 
+    <section style="text-align: center;">
+      <h2>Essaie Par Toi-Même</h2>
+      <p>Essaie le playtest en accès fermé.</p>
+      <p style="margin: 12px 0;"><strong>v0.5.4</strong> · Mot de passe : <code>neonrockets</code></p>
+      <a class="dl-btn" href="https://tremocogames.itch.io/9point8-v05-closed-playtest" target="_blank" style="font-size: 1.05em; padding: 14px 32px; margin-top: 8px; display: inline-block;">Jouer dans le navigateur sur itch.io</a>
+    </section>
+
     <section>
       <h2>À propos du studio</h2>
       <p>Tremoço Games est un studio indépendant fondé par le musicien et compositeur André B. Silva, installé à Porto. 9.8 est son premier jeu, né d'une passion de longue date pour l'exploration spatiale et la physique, nourrie par des années de composition musicale.</p>
@@ -893,6 +981,16 @@
           <p>Errichte Observatorien, setze Teleskope ein und baue deine Infrastruktur aus, um neue Ziele und Möglichkeiten aufzudecken. Dann richte den Blick nach oben und stell dein Flugkönnen auf die Probe.</p>
           <p><strong>9.8 ist ein 2D-Weltraumagentur-Simulator, in dem ein vollständig physikbasiertes Universum (N-Körper-Orbits, Atmosphären, Wärmemanagement, Hydrodynamik) jeden kleinen Schritt zu einer echten Errungenschaft macht.</strong> Entwickle dein Programm von den ersten Sprüngen bis hin zu interplanetaren Operationen in einem eigens gestalteten lokalen Sternhaufen.</p>
         </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Was Spieler Sagen</h2>
+      <div class="quotes-list">
+        <div class="quote-card"><div class="text">"It was good fun, the little details like the sonic booms in the atmosphere, the planetary variety and mission descriptions added to the charm of a greatly expanded Lunar Lander style game."</div><div class="author">— The Destroyer — Content Creator (30.000 Abonnenten)</div></div>
+        <div class="quote-card"><div class="text">"The game is already better than Spaceflight Simulator."</div><div class="author">— Meme man — Discord-Spieltester</div></div>
+        <div class="quote-card"><div class="text">"The gravity is very well polished. I can actually do a gravity assist!"</div><div class="author">— Rowbot838 — Discord-Spieltester</div></div>
+        <div class="quote-card"><div class="text">"Always wanted something like that in a space game."</div><div class="author">— Jammer — Discord-Spieltester</div></div>
       </div>
     </section>
 
@@ -960,6 +1058,13 @@
       </div>
     </div>
 
+    <section style="text-align: center;">
+      <h2>Probier Es Selbst Aus</h2>
+      <p>Teste den geschlossenen Playtest.</p>
+      <p style="margin: 12px 0;"><strong>v0.5.4</strong> · Passwort: <code>neonrockets</code></p>
+      <a class="dl-btn" href="https://tremocogames.itch.io/9point8-v05-closed-playtest" target="_blank" style="font-size: 1.05em; padding: 14px 32px; margin-top: 8px; display: inline-block;">Im Browser spielen auf itch.io</a>
+    </section>
+
     <section>
       <h2>Über das Studio</h2>
       <p>Tremoço Games ist ein Ein-Personen-Indie-Studio des Musikers und Komponisten André B. Silva aus Porto. 9.8 ist sein erstes Spiel und vereint eine lebenslange Begeisterung für Weltraumforschung und Physik mit jahrelanger Erfahrung in der Musikkomposition.</p>
@@ -1006,6 +1111,16 @@
           <p>建造天文台、部署望远镜、扩展基础设施，发现新的目标与机遇。然后朝上瞄准，用你的飞行技术说话。</p>
           <p><strong>9.8 是一款2D航天机构模拟游戏，在一个完全由物理驱动的宇宙中（N体轨道、大气层、热管理、流体力学），每一小步都需要真正赢得。</strong> 在一个精心设计的本地星团中，将你的太空计划从第一次跳跃发展到行星际作业。</p>
         </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>玩家怎么说</h2>
+      <div class="quotes-list">
+        <div class="quote-card"><div class="text">"It was good fun, the little details like the sonic booms in the atmosphere, the planetary variety and mission descriptions added to the charm of a greatly expanded Lunar Lander style game."</div><div class="author">— The Destroyer — 内容创作者（3万订阅）</div></div>
+        <div class="quote-card"><div class="text">"The game is already better than Spaceflight Simulator."</div><div class="author">— Meme man — Discord 测试玩家</div></div>
+        <div class="quote-card"><div class="text">"The gravity is very well polished. I can actually do a gravity assist!"</div><div class="author">— Rowbot838 — Discord 测试玩家</div></div>
+        <div class="quote-card"><div class="text">"Always wanted something like that in a space game."</div><div class="author">— Jammer — Discord 测试玩家</div></div>
       </div>
     </section>
 
@@ -1073,6 +1188,13 @@
       </div>
     </div>
 
+    <section style="text-align: center;">
+      <h2>亲自试玩</h2>
+      <p>通过封闭测试版亲自体验。</p>
+      <p style="margin: 12px 0;"><strong>v0.5.4</strong> · 密码：<code>neonrockets</code></p>
+      <a class="dl-btn" href="https://tremocogames.itch.io/9point8-v05-closed-playtest" target="_blank" style="font-size: 1.05em; padding: 14px 32px; margin-top: 8px; display: inline-block;">在浏览器中试玩 (itch.io)</a>
+    </section>
+
     <section>
       <h2>关于工作室</h2>
       <p>Tremoço Games 是一间由驻波尔图的音乐人兼作曲家 André B. Silva 创立的独立个人工作室。9.8 是他的首款游戏，将对太空探索和物理学的热爱与多年的音乐创作经验融为一体。</p>
@@ -1119,6 +1241,16 @@
           <p>Возводи обсерватории, разворачивай телескопы и развивай инфраструктуру, чтобы обнаруживать новые цели и новые возможности. А потом — направь нос вверх и проверь свои лётные навыки.</p>
           <p><strong>9.8 — это 2D-симулятор космического агентства, где полностью физический мир (орбиты N тел, атмосферы, управление теплом, гидродинамика) превращает каждый маленький шаг в настоящее достижение.</strong> Развивай свою программу от первых прыжков до межпланетных операций в уникальном локальном звёздном скоплении.</p>
         </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Что Говорят Игроки</h2>
+      <div class="quotes-list">
+        <div class="quote-card"><div class="text">"It was good fun, the little details like the sonic booms in the atmosphere, the planetary variety and mission descriptions added to the charm of a greatly expanded Lunar Lander style game."</div><div class="author">— The Destroyer — Контент-криейтор (30 тыс. подписчиков)</div></div>
+        <div class="quote-card"><div class="text">"The game is already better than Spaceflight Simulator."</div><div class="author">— Meme man — Тестер в Discord</div></div>
+        <div class="quote-card"><div class="text">"The gravity is very well polished. I can actually do a gravity assist!"</div><div class="author">— Rowbot838 — Тестер в Discord</div></div>
+        <div class="quote-card"><div class="text">"Always wanted something like that in a space game."</div><div class="author">— Jammer — Тестер в Discord</div></div>
       </div>
     </section>
 
@@ -1185,6 +1317,13 @@
         <img src="Gifs/CrashonAresv0.5.5.gif" alt="Crash on Ares" style="width: 100%; display: block">
       </div>
     </div>
+
+    <section style="text-align: center;">
+      <h2>Попробуй Сам</h2>
+      <p>Испытай закрытый плейтест.</p>
+      <p style="margin: 12px 0;"><strong>v0.5.4</strong> · Пароль: <code>neonrockets</code></p>
+      <a class="dl-btn" href="https://tremocogames.itch.io/9point8-v05-closed-playtest" target="_blank" style="font-size: 1.05em; padding: 14px 32px; margin-top: 8px; display: inline-block;">Играть в браузере на itch.io</a>
+    </section>
 
     <section>
       <h2>О студии</h2>
