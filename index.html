@@ -7,7 +7,9 @@
 <meta name="description" content="Press kit for 9.8, a physics-driven 2D space agency game with full N-body orbital mechanics, a working VAB, and a growing star-system cluster.">
 <meta property="og:title" content="9.8 - Press Kit">
 <meta property="og:description" content="A physics-driven 2D space agency game by Tremoço Games. Design vehicles, fly missions, and grow an agency from a home-world program into an interstellar one.">
-<meta property="og:image" content="https://tremocogames.com/images/keyart.png">
+<meta property="og:image" content="https://tremocogames.com/images/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tremocogames.com/images/og-image.jpg">
 <style>
 :root{
   color-scheme:light;
@@ -60,7 +62,14 @@ img{max-width:100%;display:block}
 .intro-block{padding:clamp(18px,4vw,28px) clamp(14px,4vw,28px) 0}
 .video-frame{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border:1px solid var(--border);background:#0b1420}
 .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.assets-row{text-align:center;padding:18px clamp(14px,4vw,28px) 4px}
+.assets-row{text-align:center;padding:18px clamp(14px,4vw,28px) 4px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.press-asset{display:flex;justify-content:center;align-items:flex-start;gap:16px;padding:22px clamp(14px,4vw,28px) 4px;flex-wrap:wrap}
+.press-asset .capsule-frame{width:150px;border:1px solid var(--border);flex-shrink:0}
+.press-asset .capsule-frame img{width:100%;display:block}
+.press-asset .capsule-copy{max-width:34ch;padding-top:4px}
+.press-asset .capsule-copy .cap-label{margin:0 0 6px;color:var(--accent);font:700 11px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.press-asset .capsule-copy p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.45}
+.press-asset .capsule-copy .btn{margin-top:12px}
 
 /* ===== Buttons ===== */
 .btn{display:inline-block;padding:12px 26px;border:1px solid var(--ink);color:var(--ink);background:transparent;font:700 12.5px/1 var(--mono);letter-spacing:.07em;text-transform:uppercase;text-decoration:none;cursor:pointer}
@@ -82,9 +91,11 @@ h2.wide{max-width:34ch}
 
 /* ===== Hero ===== */
 .hero{padding:0;border-top:none}
-.hero-art{position:relative;background:#0b1420;border-bottom:1px solid var(--border);overflow:hidden;max-height:480px}
-.hero-art img{width:100%;height:100%;object-fit:cover;display:block;max-height:480px}
-.art-credit{position:absolute;right:14px;bottom:10px;padding:4px 9px;background:rgba(5,12,20,.65);color:rgba(255,255,255,.85);font:400 10.5px/1 var(--mono)}
+.hero-art{position:relative;background:#0b1420;border-bottom:1px solid var(--border);overflow:hidden;aspect-ratio:2000/646;max-height:480px}
+.hero-art .hero-scene{width:100%;height:100%;object-fit:cover;display:block}
+.hero-logo-overlay{position:absolute;left:4%;top:11%;width:clamp(96px,19%,220px);height:auto;z-index:2;filter:drop-shadow(0 2px 14px rgba(0,0,0,.5))}
+.hero-logo-stack{display:none}
+.art-credit{position:absolute;right:14px;bottom:10px;padding:4px 9px;background:rgba(5,12,20,.65);color:rgba(255,255,255,.85);font:400 10.5px/1 var(--mono);z-index:2}
 .hero-bottom{display:grid;grid-template-columns:1.4fr 1fr}
 .hero-copy{padding:30px clamp(16px,5vw,40px);border-right:1px solid var(--line)}
 .hero-copy .kind{margin:0 0 10px;color:var(--accent);font:700 12px/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase}
@@ -95,6 +106,7 @@ h2.wide{max-width:34ch}
 .hero-meta strong{display:block;margin-bottom:4px;color:var(--ink);font:700 10.5px/1.25 var(--mono);letter-spacing:.06em;text-transform:uppercase}
 .hero-meta .span2{grid-column:1/-1;padding-top:14px;border-top:1px solid var(--line)}
 @media(max-width:820px){.hero-bottom{grid-template-columns:1fr}.hero-copy{border-right:none;border-bottom:1px solid var(--line)}}
+@media(max-width:640px){.hero-logo-overlay{display:none}.hero-logo-stack{display:flex;justify-content:center;align-items:center;padding:16px 0;background:#0b1420}.hero-logo-stack img{width:150px;height:auto;display:block}}
 @media(max-width:520px){.hero-meta{grid-template-columns:1fr}}
 
 /* ===== Fact table ===== */
@@ -271,6 +283,39 @@ h2.wide{max-width:34ch}
       <span data-lang="zh" hidden>在 Google Drive 上浏览全部素材</span>
       <span data-lang="ru" hidden>Просмотреть все материалы на Google Drive</span>
     </a>
+    <a class="btn" href="images/9.8-presskit.zip" download>
+      <span data-lang="en">Download Press Kit (ZIP)</span>
+      <span data-lang="pt" hidden>Transferir Kit de Imprensa (ZIP)</span>
+      <span data-lang="es" hidden>Descargar Kit de Prensa (ZIP)</span>
+      <span data-lang="fr" hidden>Télécharger le Dossier de Presse (ZIP)</span>
+      <span data-lang="de" hidden>Pressekit Herunterladen (ZIP)</span>
+      <span data-lang="zh" hidden>下载媒体资料包（ZIP）</span>
+      <span data-lang="ru" hidden>Скачать Пресс-Кит (ZIP)</span>
+    </a>
+  </div>
+
+  <div class="press-asset">
+    <div class="capsule-frame"><img src="images/capsule-vertical.webp" alt="9.8 vertical key art capsule" loading="lazy"></div>
+    <div class="capsule-copy">
+      <p class="cap-label">
+        <span data-lang="en">Key art / capsule</span>
+        <span data-lang="pt" hidden>Imagem principal / cápsula</span>
+        <span data-lang="es" hidden>Arte principal / cápsula</span>
+        <span data-lang="fr" hidden>Image clé / capsule</span>
+        <span data-lang="de" hidden>Schlüsselgrafik / Kapsel</span>
+        <span data-lang="zh" hidden>主视觉图 / 竖版海报</span>
+        <span data-lang="ru" hidden>Ключевая иллюстрация / капсула</span>
+      </p>
+      <p>
+        <span data-lang="en">Vertical capsule art (600&times;900) by Alberto Trujillo. Full-resolution originals of all key art, logo and capsules are in the ZIP and the Drive folder above.</span>
+        <span data-lang="pt" hidden>Imagem de cápsula vertical (600&times;900) por Alberto Trujillo. Os originais em alta resolução de toda a arte principal, logótipo e cápsulas estão no ZIP e na pasta do Drive acima.</span>
+        <span data-lang="es" hidden>Arte de cápsula vertical (600&times;900) de Alberto Trujillo. Los originales a resolución completa de todo el arte principal, el logotipo y las cápsulas están en el ZIP y en la carpeta de Drive de arriba.</span>
+        <span data-lang="fr" hidden>Image de capsule verticale (600&times;900) par Alberto Trujillo. Les originaux en pleine résolution de toute l&rsquo;image clé, du logo et des capsules se trouvent dans le ZIP et le dossier Drive ci-dessus.</span>
+        <span data-lang="de" hidden>Vertikale Kapselgrafik (600&times;900) von Alberto Trujillo. Die Originale aller Schlüsselgrafiken, des Logos und der Kapseln in voller Auflösung finden sich im ZIP und im Drive-Ordner oben.</span>
+        <span data-lang="zh" hidden>竖版海报（600&times;900），作者 Alberto Trujillo。所有主视觉图、标志与海报的全分辨率原图见上方 ZIP 与 Drive 文件夹。</span>
+        <span data-lang="ru" hidden>Вертикальная капсула (600&times;900), автор Alberto Trujillo. Оригиналы в полном разрешении всей ключевой иллюстрации, логотипа и капсул — в ZIP и в папке Drive выше.</span>
+      </p>
+    </div>
   </div>
 
   <!-- ==================== ENGLISH ==================== -->
@@ -287,8 +332,10 @@ h2.wide{max-width:34ch}
 
   <!-- Hero -->
   <section class="hero" aria-label="Hero">
+    <div class="hero-logo-stack"><img src="images/logo-98-wordmark.webp" alt="9.8" loading="eager"></div>
     <div class="hero-art">
-      <img src="images/keyart.webp" alt="A rocket climbing away from an ocean-side launch complex, key art for 9.8" loading="eager">
+      <img class="hero-logo-overlay" src="images/logo-98-wordmark.webp" alt="9.8" loading="eager">
+      <img class="hero-scene" src="images/hero-key-art.webp" alt="A rocket climbing away from an ocean-side launch complex, key art for 9.8" loading="eager">
       <div class="art-credit">Key art by Alberto Trujillo</div>
     </div>
     <div class="hero-bottom">
@@ -511,13 +558,11 @@ h2.wide{max-width:34ch}
       <a href="images/screenshot-07-triple-booster-launch.webp" target="_blank" rel="noopener"><img src="images/screenshot-07-triple-booster-launch.webp" alt="Heavy triple-booster rocket lifting off from a coastal launch site" loading="lazy"></a>
       <a href="images/screenshot-13-earthlike-planet.webp" target="_blank" rel="noopener"><img src="images/screenshot-13-earthlike-planet.webp" alt="An Earthlike planet seen from orbit, with oceans and clouds" loading="lazy"></a>
       <a href="images/screenshot-08-offworld-night-launch.webp" target="_blank" rel="noopener"><img src="images/screenshot-08-offworld-night-launch.webp" alt="Off-world launch site at night under a violet sky" loading="lazy"></a>
-      <a href="images/screenshot-02.webp" target="_blank" rel="noopener"><img src="images/screenshot-02.webp" alt="Tinderhusk, a volcanic world with rivers of lava" loading="lazy"></a>
       <a href="images/screenshot-11-asteroid-dock.webp" target="_blank" rel="noopener"><img src="images/screenshot-11-asteroid-dock.webp" alt="Spacecraft docked to a purple asteroid" loading="lazy"></a>
       <a href="images/screenshot-09-atmospheric-flight-desert.webp" target="_blank" rel="noopener"><img src="images/screenshot-09-atmospheric-flight-desert.webp" alt="Atmospheric flight over a desert world" loading="lazy"></a>
       <a href="images/screenshot-10-rover-crater.webp" target="_blank" rel="noopener"><img src="images/screenshot-10-rover-crater.webp" alt="Rover exploring the rim of a crater" loading="lazy"></a>
       <a href="images/screenshot-12-pad-fuel-depot.webp" target="_blank" rel="noopener"><img src="images/screenshot-12-pad-fuel-depot.webp" alt="Rocket on the pad beside a fuel depot" loading="lazy"></a>
-      <a href="images/screenshot-01.webp" target="_blank" rel="noopener"><img src="images/screenshot-01.webp" alt="Rocket launch from a coastal launch complex" loading="lazy"></a>
-      <a href="images/screenshot-03.webp" target="_blank" rel="noopener"><img src="images/screenshot-03.webp" alt="Moon base with a rocket on the launchpad" loading="lazy"></a>
+
     </div>
   </section>
 
@@ -594,8 +639,10 @@ h2.wide{max-width:34ch}
   </nav>
 
   <section class="hero" aria-label="Destaque">
+    <div class="hero-logo-stack"><img src="images/logo-98-wordmark.webp" alt="9.8" loading="eager"></div>
     <div class="hero-art">
-      <img src="images/keyart.webp" alt="Um foguetão a subir a partir de um complexo de lançamento junto ao mar, imagem promocional de 9.8" loading="eager">
+      <img class="hero-logo-overlay" src="images/logo-98-wordmark.webp" alt="9.8" loading="eager">
+      <img class="hero-scene" src="images/hero-key-art.webp" alt="Um foguetão a subir a partir de um complexo de lançamento junto ao mar, imagem promocional de 9.8" loading="eager">
       <div class="art-credit">Arte por Alberto Trujillo</div>
     </div>
     <div class="hero-bottom">
@@ -809,13 +856,11 @@ h2.wide{max-width:34ch}
       <a href="images/screenshot-07-triple-booster-launch.webp" target="_blank" rel="noopener"><img src="images/screenshot-07-triple-booster-launch.webp" alt="Foguetão pesado de três propulsores a descolar de um local de lançamento costeiro" loading="lazy"></a>
       <a href="images/screenshot-13-earthlike-planet.webp" target="_blank" rel="noopener"><img src="images/screenshot-13-earthlike-planet.webp" alt="Um planeta semelhante à Terra visto da órbita, com oceanos e nuvens" loading="lazy"></a>
       <a href="images/screenshot-08-offworld-night-launch.webp" target="_blank" rel="noopener"><img src="images/screenshot-08-offworld-night-launch.webp" alt="Local de lançamento noutro mundo, de noite, sob um céu violeta" loading="lazy"></a>
-      <a href="images/screenshot-02.webp" target="_blank" rel="noopener"><img src="images/screenshot-02.webp" alt="Tinderhusk, um mundo vulcânico com rios de lava" loading="lazy"></a>
       <a href="images/screenshot-11-asteroid-dock.webp" target="_blank" rel="noopener"><img src="images/screenshot-11-asteroid-dock.webp" alt="Nave acoplada a um asteroide roxo" loading="lazy"></a>
       <a href="images/screenshot-09-atmospheric-flight-desert.webp" target="_blank" rel="noopener"><img src="images/screenshot-09-atmospheric-flight-desert.webp" alt="Voo atmosférico sobre um mundo desértico" loading="lazy"></a>
       <a href="images/screenshot-10-rover-crater.webp" target="_blank" rel="noopener"><img src="images/screenshot-10-rover-crater.webp" alt="Rover a explorar a borda de uma cratera" loading="lazy"></a>
       <a href="images/screenshot-12-pad-fuel-depot.webp" target="_blank" rel="noopener"><img src="images/screenshot-12-pad-fuel-depot.webp" alt="Foguetão na plataforma junto a um depósito de combustível" loading="lazy"></a>
-      <a href="images/screenshot-01.webp" target="_blank" rel="noopener"><img src="images/screenshot-01.webp" alt="Lançamento de foguetão a partir de um complexo costeiro" loading="lazy"></a>
-      <a href="images/screenshot-03.webp" target="_blank" rel="noopener"><img src="images/screenshot-03.webp" alt="Base lunar com um foguetão na plataforma de lançamento" loading="lazy"></a>
+
     </div>
   </section>
 
@@ -888,8 +933,10 @@ h2.wide{max-width:34ch}
   </nav>
 
   <section class="hero" aria-label="Portada">
+    <div class="hero-logo-stack"><img src="images/logo-98-wordmark.webp" alt="9.8" loading="eager"></div>
     <div class="hero-art">
-      <img src="images/keyart.webp" alt="Un cohete despegando desde un complejo de lanzamiento costero, arte principal de 9.8" loading="eager">
+      <img class="hero-logo-overlay" src="images/logo-98-wordmark.webp" alt="9.8" loading="eager">
+      <img class="hero-scene" src="images/hero-key-art.webp" alt="Un cohete despegando desde un complejo de lanzamiento costero, arte principal de 9.8" loading="eager">
       <div class="art-credit">Arte de Alberto Trujillo</div>
     </div>
     <div class="hero-bottom">
@@ -1103,13 +1150,11 @@ h2.wide{max-width:34ch}
       <a href="images/screenshot-07-triple-booster-launch.webp" target="_blank" rel="noopener"><img src="images/screenshot-07-triple-booster-launch.webp" alt="Cohete pesado de tres propulsores despegando desde un sitio de lanzamiento costero" loading="lazy"></a>
       <a href="images/screenshot-13-earthlike-planet.webp" target="_blank" rel="noopener"><img src="images/screenshot-13-earthlike-planet.webp" alt="Un planeta parecido a la Tierra visto desde la órbita, con océanos y nubes" loading="lazy"></a>
       <a href="images/screenshot-08-offworld-night-launch.webp" target="_blank" rel="noopener"><img src="images/screenshot-08-offworld-night-launch.webp" alt="Sitio de lanzamiento en otro mundo, de noche, bajo un cielo violeta" loading="lazy"></a>
-      <a href="images/screenshot-02.webp" target="_blank" rel="noopener"><img src="images/screenshot-02.webp" alt="Tinderhusk, un mundo volcánico con ríos de lava" loading="lazy"></a>
       <a href="images/screenshot-11-asteroid-dock.webp" target="_blank" rel="noopener"><img src="images/screenshot-11-asteroid-dock.webp" alt="Nave acoplada a un asteroide púrpura" loading="lazy"></a>
       <a href="images/screenshot-09-atmospheric-flight-desert.webp" target="_blank" rel="noopener"><img src="images/screenshot-09-atmospheric-flight-desert.webp" alt="Vuelo atmosférico sobre un mundo desértico" loading="lazy"></a>
       <a href="images/screenshot-10-rover-crater.webp" target="_blank" rel="noopener"><img src="images/screenshot-10-rover-crater.webp" alt="Rover explorando el borde de un cráter" loading="lazy"></a>
       <a href="images/screenshot-12-pad-fuel-depot.webp" target="_blank" rel="noopener"><img src="images/screenshot-12-pad-fuel-depot.webp" alt="Cohete en la plataforma junto a un depósito de combustible" loading="lazy"></a>
-      <a href="images/screenshot-01.webp" target="_blank" rel="noopener"><img src="images/screenshot-01.webp" alt="Lanzamiento de cohete desde un complejo costero" loading="lazy"></a>
-      <a href="images/screenshot-03.webp" target="_blank" rel="noopener"><img src="images/screenshot-03.webp" alt="Base lunar con un cohete en la plataforma de lanzamiento" loading="lazy"></a>
+
     </div>
   </section>
 
@@ -1182,8 +1227,10 @@ h2.wide{max-width:34ch}
   </nav>
 
   <section class="hero" aria-label="En-tête">
+    <div class="hero-logo-stack"><img src="images/logo-98-wordmark.webp" alt="9.8" loading="eager"></div>
     <div class="hero-art">
-      <img src="images/keyart.webp" alt="Une fusée décollant d'un complexe de lancement côtier, image clé de 9.8" loading="eager">
+      <img class="hero-logo-overlay" src="images/logo-98-wordmark.webp" alt="9.8" loading="eager">
+      <img class="hero-scene" src="images/hero-key-art.webp" alt="Une fusée décollant d'un complexe de lancement côtier, image clé de 9.8" loading="eager">
       <div class="art-credit">Art par Alberto Trujillo</div>
     </div>
     <div class="hero-bottom">
@@ -1397,13 +1444,11 @@ h2.wide{max-width:34ch}
       <a href="images/screenshot-07-triple-booster-launch.webp" target="_blank" rel="noopener"><img src="images/screenshot-07-triple-booster-launch.webp" alt="Fus&eacute;e lourde &agrave; trois propulseurs d&eacute;collant d&rsquo;un site de lancement c&ocirc;tier" loading="lazy"></a>
       <a href="images/screenshot-13-earthlike-planet.webp" target="_blank" rel="noopener"><img src="images/screenshot-13-earthlike-planet.webp" alt="Une plan&egrave;te de type terrestre vue depuis l&rsquo;orbite, avec oc&eacute;ans et nuages" loading="lazy"></a>
       <a href="images/screenshot-08-offworld-night-launch.webp" target="_blank" rel="noopener"><img src="images/screenshot-08-offworld-night-launch.webp" alt="Site de lancement sur un autre monde, de nuit, sous un ciel violet" loading="lazy"></a>
-      <a href="images/screenshot-02.webp" target="_blank" rel="noopener"><img src="images/screenshot-02.webp" alt="Tinderhusk, un monde volcanique avec des rivi&egrave;res de lave" loading="lazy"></a>
       <a href="images/screenshot-11-asteroid-dock.webp" target="_blank" rel="noopener"><img src="images/screenshot-11-asteroid-dock.webp" alt="Vaisseau amarr&eacute; &agrave; un ast&eacute;ro&iuml;de violet" loading="lazy"></a>
       <a href="images/screenshot-09-atmospheric-flight-desert.webp" target="_blank" rel="noopener"><img src="images/screenshot-09-atmospheric-flight-desert.webp" alt="Vol atmosph&eacute;rique au-dessus d&rsquo;un monde d&eacute;sertique" loading="lazy"></a>
       <a href="images/screenshot-10-rover-crater.webp" target="_blank" rel="noopener"><img src="images/screenshot-10-rover-crater.webp" alt="Rover explorant le bord d&rsquo;un crat&egrave;re" loading="lazy"></a>
       <a href="images/screenshot-12-pad-fuel-depot.webp" target="_blank" rel="noopener"><img src="images/screenshot-12-pad-fuel-depot.webp" alt="Fus&eacute;e sur le pas de tir &agrave; c&ocirc;t&eacute; d&rsquo;un d&eacute;p&ocirc;t de carburant" loading="lazy"></a>
-      <a href="images/screenshot-01.webp" target="_blank" rel="noopener"><img src="images/screenshot-01.webp" alt="Lancement de fus&eacute;e depuis un complexe c&ocirc;tier" loading="lazy"></a>
-      <a href="images/screenshot-03.webp" target="_blank" rel="noopener"><img src="images/screenshot-03.webp" alt="Base lunaire avec une fus&eacute;e sur le pas de tir" loading="lazy"></a>
+
     </div>
   </section>
 
@@ -1476,8 +1521,10 @@ h2.wide{max-width:34ch}
   </nav>
 
   <section class="hero" aria-label="Titelbereich">
+    <div class="hero-logo-stack"><img src="images/logo-98-wordmark.webp" alt="9.8" loading="eager"></div>
     <div class="hero-art">
-      <img src="images/keyart.webp" alt="Eine Rakete steigt von einem k&uuml;stennahen Startkomplex auf, Schl&uuml;sselgrafik zu 9.8" loading="eager">
+      <img class="hero-logo-overlay" src="images/logo-98-wordmark.webp" alt="9.8" loading="eager">
+      <img class="hero-scene" src="images/hero-key-art.webp" alt="Eine Rakete steigt von einem k&uuml;stennahen Startkomplex auf, Schl&uuml;sselgrafik zu 9.8" loading="eager">
       <div class="art-credit">Artwork von Alberto Trujillo</div>
     </div>
     <div class="hero-bottom">
@@ -1691,13 +1738,11 @@ h2.wide{max-width:34ch}
       <a href="images/screenshot-07-triple-booster-launch.webp" target="_blank" rel="noopener"><img src="images/screenshot-07-triple-booster-launch.webp" alt="Schwere Rakete mit drei Boostern startet von einer k&uuml;stennahen Startanlage" loading="lazy"></a>
       <a href="images/screenshot-13-earthlike-planet.webp" target="_blank" rel="noopener"><img src="images/screenshot-13-earthlike-planet.webp" alt="Ein erd&auml;hnlicher Planet aus dem Orbit gesehen, mit Ozeanen und Wolken" loading="lazy"></a>
       <a href="images/screenshot-08-offworld-night-launch.webp" target="_blank" rel="noopener"><img src="images/screenshot-08-offworld-night-launch.webp" alt="Startanlage auf einer anderen Welt bei Nacht unter violettem Himmel" loading="lazy"></a>
-      <a href="images/screenshot-02.webp" target="_blank" rel="noopener"><img src="images/screenshot-02.webp" alt="Tinderhusk, eine vulkanische Welt mit Lavafl&uuml;ssen" loading="lazy"></a>
       <a href="images/screenshot-11-asteroid-dock.webp" target="_blank" rel="noopener"><img src="images/screenshot-11-asteroid-dock.webp" alt="Raumschiff angedockt an einen violetten Asteroiden" loading="lazy"></a>
       <a href="images/screenshot-09-atmospheric-flight-desert.webp" target="_blank" rel="noopener"><img src="images/screenshot-09-atmospheric-flight-desert.webp" alt="Atmosph&auml;renflug &uuml;ber eine W&uuml;stenwelt" loading="lazy"></a>
       <a href="images/screenshot-10-rover-crater.webp" target="_blank" rel="noopener"><img src="images/screenshot-10-rover-crater.webp" alt="Rover erkundet den Rand eines Kraters" loading="lazy"></a>
       <a href="images/screenshot-12-pad-fuel-depot.webp" target="_blank" rel="noopener"><img src="images/screenshot-12-pad-fuel-depot.webp" alt="Rakete auf der Startrampe neben einem Treibstoffdepot" loading="lazy"></a>
-      <a href="images/screenshot-01.webp" target="_blank" rel="noopener"><img src="images/screenshot-01.webp" alt="Raketenstart von einem k&uuml;stennahen Komplex" loading="lazy"></a>
-      <a href="images/screenshot-03.webp" target="_blank" rel="noopener"><img src="images/screenshot-03.webp" alt="Mondbasis mit einer Rakete auf der Startrampe" loading="lazy"></a>
+
     </div>
   </section>
 
@@ -1770,8 +1815,10 @@ h2.wide{max-width:34ch}
   </nav>
 
   <section class="hero" aria-label="头图">
+    <div class="hero-logo-stack"><img src="images/logo-98-wordmark.webp" alt="9.8" loading="eager"></div>
     <div class="hero-art">
-      <img src="images/keyart.webp" alt="一枚火箭从海边发射场升空，9.8 的主视觉图" loading="eager">
+      <img class="hero-logo-overlay" src="images/logo-98-wordmark.webp" alt="9.8" loading="eager">
+      <img class="hero-scene" src="images/hero-key-art.webp" alt="一枚火箭从海边发射场升空，9.8 的主视觉图" loading="eager">
       <div class="art-credit">主视觉图 by Alberto Trujillo</div>
     </div>
     <div class="hero-bottom">
@@ -1985,13 +2032,11 @@ h2.wide{max-width:34ch}
       <a href="images/screenshot-07-triple-booster-launch.webp" target="_blank" rel="noopener"><img src="images/screenshot-07-triple-booster-launch.webp" alt="三助推器重型火箭从沿海发射场升空" loading="lazy"></a>
       <a href="images/screenshot-13-earthlike-planet.webp" target="_blank" rel="noopener"><img src="images/screenshot-13-earthlike-planet.webp" alt="从轨道上看到的一颗类地行星，拥有海洋与云层" loading="lazy"></a>
       <a href="images/screenshot-08-offworld-night-launch.webp" target="_blank" rel="noopener"><img src="images/screenshot-08-offworld-night-launch.webp" alt="紫色夜空下，异星发射场的夜间景象" loading="lazy"></a>
-      <a href="images/screenshot-02.webp" target="_blank" rel="noopener"><img src="images/screenshot-02.webp" alt="Tinderhusk，一个布满熔岩河流的火山世界" loading="lazy"></a>
       <a href="images/screenshot-11-asteroid-dock.webp" target="_blank" rel="noopener"><img src="images/screenshot-11-asteroid-dock.webp" alt="飞船与一颗紫色小行星对接" loading="lazy"></a>
       <a href="images/screenshot-09-atmospheric-flight-desert.webp" target="_blank" rel="noopener"><img src="images/screenshot-09-atmospheric-flight-desert.webp" alt="在沙漠世界上空进行大气层飞行" loading="lazy"></a>
       <a href="images/screenshot-10-rover-crater.webp" target="_blank" rel="noopener"><img src="images/screenshot-10-rover-crater.webp" alt="巡视器探索环形山边缘" loading="lazy"></a>
       <a href="images/screenshot-12-pad-fuel-depot.webp" target="_blank" rel="noopener"><img src="images/screenshot-12-pad-fuel-depot.webp" alt="发射台上的火箭与旁边的燃料补给站" loading="lazy"></a>
-      <a href="images/screenshot-01.webp" target="_blank" rel="noopener"><img src="images/screenshot-01.webp" alt="从沿海发射综合体升空的火箭" loading="lazy"></a>
-      <a href="images/screenshot-03.webp" target="_blank" rel="noopener"><img src="images/screenshot-03.webp" alt="月面基地，发射台上停着一枚火箭" loading="lazy"></a>
+
     </div>
   </section>
 
@@ -2064,8 +2109,10 @@ h2.wide{max-width:34ch}
   </nav>
 
   <section class="hero" aria-label="Главный блок">
+    <div class="hero-logo-stack"><img src="images/logo-98-wordmark.webp" alt="9.8" loading="eager"></div>
     <div class="hero-art">
-      <img src="images/keyart.webp" alt="Ракета взлетает с прибрежного стартового комплекса, ключевая иллюстрация 9.8" loading="eager">
+      <img class="hero-logo-overlay" src="images/logo-98-wordmark.webp" alt="9.8" loading="eager">
+      <img class="hero-scene" src="images/hero-key-art.webp" alt="Ракета взлетает с прибрежного стартового комплекса, ключевая иллюстрация 9.8" loading="eager">
       <div class="art-credit">Арт — Alberto Trujillo</div>
     </div>
     <div class="hero-bottom">
@@ -2279,13 +2326,11 @@ h2.wide{max-width:34ch}
       <a href="images/screenshot-07-triple-booster-launch.webp" target="_blank" rel="noopener"><img src="images/screenshot-07-triple-booster-launch.webp" alt="Тяжёлая ракета с тремя ускорителями стартует с прибрежной площадки" loading="lazy"></a>
       <a href="images/screenshot-13-earthlike-planet.webp" target="_blank" rel="noopener"><img src="images/screenshot-13-earthlike-planet.webp" alt="Землеподобная планета с орбиты, с океанами и облаками" loading="lazy"></a>
       <a href="images/screenshot-08-offworld-night-launch.webp" target="_blank" rel="noopener"><img src="images/screenshot-08-offworld-night-launch.webp" alt="Стартовая площадка на другом мире ночью, под фиолетовым небом" loading="lazy"></a>
-      <a href="images/screenshot-02.webp" target="_blank" rel="noopener"><img src="images/screenshot-02.webp" alt="Tinderhusk — вулканический мир с реками лавы" loading="lazy"></a>
       <a href="images/screenshot-11-asteroid-dock.webp" target="_blank" rel="noopener"><img src="images/screenshot-11-asteroid-dock.webp" alt="Корабль состыкован с фиолетовым астероидом" loading="lazy"></a>
       <a href="images/screenshot-09-atmospheric-flight-desert.webp" target="_blank" rel="noopener"><img src="images/screenshot-09-atmospheric-flight-desert.webp" alt="Полёт в атмосфере над пустынным миром" loading="lazy"></a>
       <a href="images/screenshot-10-rover-crater.webp" target="_blank" rel="noopener"><img src="images/screenshot-10-rover-crater.webp" alt="Планетоход исследует край кратера" loading="lazy"></a>
       <a href="images/screenshot-12-pad-fuel-depot.webp" target="_blank" rel="noopener"><img src="images/screenshot-12-pad-fuel-depot.webp" alt="Ракета на площадке рядом с топливным хранилищем" loading="lazy"></a>
-      <a href="images/screenshot-01.webp" target="_blank" rel="noopener"><img src="images/screenshot-01.webp" alt="Запуск ракеты с прибрежного комплекса" loading="lazy"></a>
-      <a href="images/screenshot-03.webp" target="_blank" rel="noopener"><img src="images/screenshot-03.webp" alt="Лунная база с ракетой на стартовой площадке" loading="lazy"></a>
+
     </div>
   </section>
 
